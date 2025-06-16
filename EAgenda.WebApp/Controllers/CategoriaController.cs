@@ -1,0 +1,70 @@
+﻿using EAgenda.Dominio.ModuloCategoria;
+using EAgenda.Infraestrutura.Arquivos.Compartilhado;
+using EAgenda.Infraestrutura.Arquivos.ModuloCategoria;
+using EAgenda.WebApp.Extensions;
+using EAgenda.WebApp.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace EAgenda.WebApp.Controllers;
+
+[Route("categorias")]
+public class CategoriaController : Controller
+{
+    private readonly ContextoDados contextoDados;
+    private readonly IRepositorioCategoria repositorioCategoria;
+
+    public CategoriaController()
+    {
+        contextoDados = new ContextoDados(true);
+        repositorioCategoria = new RepositorioCategoriaEmArquivo(contextoDados);
+    }
+
+    public IActionResult Index()
+    {
+        var registros = repositorioCategoria.SelecionarRegistros();
+
+        var visualizarVM = new VisualizarCategoriasViewModel(registros);
+
+        return View(visualizarVM);
+    }
+
+    [HttpGet("cadastrar")]
+    public IActionResult Cadastrar()
+    {
+        var cadastrarVM = new CadastrarCategoriaViewModel();
+
+        return View(cadastrarVM);
+    }
+
+    [HttpPost("cadastrar")]
+    [ValidateAntiForgeryToken]
+    public ActionResult Cadastrar(CadastrarCategoriaViewModel cadastrarVM)
+    {
+        var registros = repositorioCategoria.SelecionarRegistros();
+
+        foreach (var item in registros)
+        {
+            if (item.Titulo.Equals(cadastrarVM.Titulo))
+            {
+                ModelState.AddModelError("CadastroUnico", "Já existe um garçom registrado com este nome.");
+                break;
+            }
+
+            if (item.Titulo.Equals(cadastrarVM.Titulo))
+            {
+                ModelState.AddModelError("CadastroUnico", "Já existe um garçom registrado com este CPF.");
+                break;
+            }
+        }
+
+        if (!ModelState.IsValid)
+            return View(cadastrarVM);
+
+        var entidade = cadastrarVM.ParaEntidade();
+
+        repositorioCategoria.CadastrarRegistro(entidade);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+}

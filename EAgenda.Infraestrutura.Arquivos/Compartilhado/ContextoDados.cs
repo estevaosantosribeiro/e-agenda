@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using System.Text.Json;
+using EAgenda.Dominio.ModuloCategoria;
 
 namespace EAgenda.Infraestrutura.Arquivos.Compartilhado;
 
@@ -9,6 +10,8 @@ public class ContextoDados
         "AcademiaProgramador2025");
     private string arquivoArmazenamento = "dados.json";
     private string pastaPrincipal = "EAgenda";
+
+    public List<Categoria> Categorias { get; set; }
 
     public ContextoDados()
     {
@@ -62,5 +65,7 @@ public class ContextoDados
         )!;
 
         if (contextoArmazenado == null) return;
+
+        Categorias = contextoArmazenado.Categorias;
     }
 }
