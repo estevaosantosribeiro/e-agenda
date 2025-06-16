@@ -5,8 +5,10 @@ namespace EAgenda.Infraestrutura.Arquivos.Compartilhado;
 
 public class ContextoDados
 {
-    private string pastaArmazenamento = "C:\\temp";
-    private string arquivoArmazenamento = "dados-controle-bar.json";
+    private string pastaRaiz = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "AcademiaProgramador2025");
+    private string arquivoArmazenamento = "dados.json";
+    private string pastaPrincipal = "EAgenda";
 
     public ContextoDados()
     {
@@ -20,23 +22,30 @@ public class ContextoDados
 
     public void Salvar()
     {
-        string caminhoCompleto = Path.Combine(pastaArmazenamento, arquivoArmazenamento);
+        if (!Directory.Exists(pastaRaiz))
+            Directory.CreateDirectory(pastaRaiz);
+
+        string pastaProjeto = Path.Combine(pastaRaiz, pastaPrincipal);
+
+        if (!Directory.Exists(pastaProjeto))
+            Directory.CreateDirectory(pastaProjeto);
 
         JsonSerializerOptions jsonOptions = new JsonSerializerOptions();
         jsonOptions.WriteIndented = true;
         jsonOptions.ReferenceHandler = ReferenceHandler.Preserve;
 
-        string json = JsonSerializer.Serialize(this, jsonOptions);
+        string caminhoCompleto = Path.Combine(pastaProjeto, arquivoArmazenamento);
 
-        if (!Directory.Exists(pastaArmazenamento))
-            Directory.CreateDirectory(pastaArmazenamento);
+        string json = JsonSerializer.Serialize(this, jsonOptions);
 
         File.WriteAllText(caminhoCompleto, json);
     }
 
     public void Carregar()
     {
-        string caminhoCompleto = Path.Combine(pastaArmazenamento, arquivoArmazenamento);
+        string pastaProjeto = Path.Combine(pastaRaiz, pastaPrincipal);
+
+        string caminhoCompleto = Path.Combine(pastaProjeto, arquivoArmazenamento);
 
         if (!File.Exists(caminhoCompleto)) return;
 
