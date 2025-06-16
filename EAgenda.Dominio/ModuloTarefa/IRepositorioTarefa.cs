@@ -2,4 +2,4 @@
 
 namespace EAgenda.Dominio.ModuloTarefa;
 
-interface IRepositorioTarefa : IRepositorio<Tarefa>;
+public interface IRepositorioTarefa : IRepositorio<Tarefa>;
