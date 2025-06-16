@@ -3,7 +3,7 @@ using EAgenda.Infraestrutura.Arquivos.Compartilhado;
 
 namespace EAgenda.Infraestrutura.Arquivos.ModuloTarefa;
 
-public class RepositorioTarefaEmArquivo : RepositorioBaseEmArquivo<Tarefa>
+public class RepositorioTarefaEmArquivo : RepositorioBaseEmArquivo<Tarefa>, IRepositorioTarefa
 {
     public RepositorioTarefaEmArquivo(ContextoDados contexto) : base(contexto) { }
 

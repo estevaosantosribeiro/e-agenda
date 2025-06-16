@@ -35,13 +35,11 @@ public class Tarefa : EntidadeBase<Tarefa>
     public Tarefa(
         string titulo, 
         Prioridade prioridade, 
-        DateTime dataCriacao, 
-        List<ItemTarefa> itemTarefas) : this()
+        DateTime dataCriacao) : this()
     {
         Titulo = titulo;
         Prioridade = prioridade;
         DataCriacao = dataCriacao;
-        ItensTarefas = itemTarefas;
         EstaConcluida = false;
     }
     

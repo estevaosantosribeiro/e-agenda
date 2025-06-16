@@ -1,15 +1,20 @@
-namespace EAgenda.WebApp
+namespace EAgenda.WebApp;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
-            var app = builder.Build();
+        var builder = WebApplication.CreateBuilder(args);
 
-            app.MapGet("/", () => "Hello World!");
+        builder.Services.AddControllersWithViews();
 
-            app.Run();
-        }
+        var app = builder.Build();
+
+        app.UseAntiforgery();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.MapDefaultControllerRoute();
+
+        app.Run();
     }
 }
