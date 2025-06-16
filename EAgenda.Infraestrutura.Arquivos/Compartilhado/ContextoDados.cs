@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Security.Cryptography.X509Certificates;
 using EAgenda.Dominio.ModuloContato;
 using EAgenda.Dominio.ModuloTarefa;
+using EAgenda.Dominio.Modulo_Compromissos;
 
 namespace EAgenda.Infraestrutura.Arquivos.Compartilhado;
 
@@ -16,10 +17,12 @@ public class ContextoDados
     public List<Tarefa> Tarefas { get; set; }
 
     public List<Contato> contatos { get; set; }
+    public List<Compromisso> compromissos { get; set; }
     public ContextoDados()
     {
         Tarefas = new List<Tarefa>();
         contatos = new List<Contato>();
+        compromissos = new List<Compromisso>();
     }
 
     public ContextoDados(bool carregarDados) : this()
@@ -74,5 +77,7 @@ public class ContextoDados
         Tarefas = contextoArmazenado.Tarefas;
 
         contatos = contextoArmazenado.contatos;
+
+        compromissos = contextoArmazenado.compromissos;
     }
 }
