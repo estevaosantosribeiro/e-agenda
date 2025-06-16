@@ -15,7 +15,7 @@ public class ContextoDados
 
     public List<Tarefa> Tarefas { get; set; }
 
-    public List<Contato> contatos = new List<Contato>();
+    public List<Contato> contatos { get; set; }
     public ContextoDados()
     {
         Tarefas = new List<Tarefa>();

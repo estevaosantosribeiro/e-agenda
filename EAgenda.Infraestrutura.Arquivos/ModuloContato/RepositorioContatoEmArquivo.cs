@@ -10,9 +10,13 @@ namespace EAgenda.Infraestrutura.Arquivos.ModuloContato
 {
     public class RepositorioContatoEmArquivo : RepositorioBaseEmArquivo <Contato>
     {
+        public RepositorioContatoEmArquivo(ContextoDados contexto) : base(contexto)
+        {
+        }
+
         protected override List<Contato> ObterRegistros()
         {
-            return contexto.
+            return contexto.contatos;
         }
     }
 }
