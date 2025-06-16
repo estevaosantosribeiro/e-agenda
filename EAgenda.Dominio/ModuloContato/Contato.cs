@@ -15,13 +15,13 @@ namespace EAgenda.Dominio.ModuloContato
         public string Cargo { get; set; }
         public string Empresa { get; set; }
 
-        public Contato(string nome, string email, string telefone, string cargo, string Empresa)
+        public Contato(string nome, string email, string telefone, string cargo, string empresa)
         {
             Nome = nome;
             Email = email;
             Telefone = telefone;
             Cargo = cargo;
-            Empresa = Empresa;
+            Empresa = empresa;
 
         }
 

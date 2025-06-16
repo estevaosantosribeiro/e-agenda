@@ -1,5 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Security.Cryptography.X509Certificates;
+using EAgenda.Dominio.ModuloContato;
 
 namespace EAgenda.Infraestrutura.Arquivos.Compartilhado;
 
@@ -10,8 +12,10 @@ public class ContextoDados
     private string arquivoArmazenamento = "dados.json";
     private string pastaPrincipal = "EAgenda";
 
+    public List<Contato> contatos = new List<Contato>();
     public ContextoDados()
     {
+        contatos = new List<Contato>();
     }
 
     public ContextoDados(bool carregarDados) : this()
@@ -62,5 +66,7 @@ public class ContextoDados
         )!;
 
         if (contextoArmazenado == null) return;
+
+        contatos = contextoArmazenado.contatos;
     }
 }
