@@ -1,6 +1,6 @@
 ﻿using EAgenda.Dominio.Compartilhado;
 
-namespace EAgenda.Dominio.ModuloTarefas;
+namespace EAgenda.Dominio.ModuloTarefa;
 
 public class ItemTarefa : EntidadeBase<ItemTarefa>
 {

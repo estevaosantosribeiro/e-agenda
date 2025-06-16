@@ -1,4 +1,4 @@
-﻿namespace EAgenda.Dominio.ModuloTarefas;
+﻿namespace EAgenda.Dominio.ModuloTarefa;
 
 public enum Prioridade
 {

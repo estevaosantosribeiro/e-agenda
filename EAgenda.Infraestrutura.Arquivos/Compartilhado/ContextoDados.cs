@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using System.Text.Json;
+using EAgenda.Dominio.ModuloTarefa;
 
 namespace EAgenda.Infraestrutura.Arquivos.Compartilhado;
 
@@ -10,8 +11,11 @@ public class ContextoDados
     private string arquivoArmazenamento = "dados.json";
     private string pastaPrincipal = "EAgenda";
 
+    public List<Tarefa> Tarefas { get; set; }
+
     public ContextoDados()
     {
+        Tarefas = new List<Tarefa>();
     }
 
     public ContextoDados(bool carregarDados) : this()
@@ -62,5 +66,7 @@ public class ContextoDados
         )!;
 
         if (contextoArmazenado == null) return;
+
+        Tarefas = contextoArmazenado.Tarefas;
     }
 }

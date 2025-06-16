@@ -1,6 +1,6 @@
 ﻿using EAgenda.Dominio.Compartilhado;
 
-namespace EAgenda.Dominio.ModuloTarefas;
+namespace EAgenda.Dominio.ModuloTarefa;
 
 public class Tarefa : EntidadeBase<Tarefa>
 {
@@ -30,7 +30,6 @@ public class Tarefa : EntidadeBase<Tarefa>
         } 
     }
     
-
     public Tarefa() { }
 
     public Tarefa(
