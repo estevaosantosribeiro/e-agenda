@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EAgenda.Infraestrutura.Arquivos.ModuloContato
 {
-    public class RepositorioContatoEmArquivo : RepositorioBaseEmArquivo <Contato>
+    public class RepositorioContatoEmArquivo : RepositorioBaseEmArquivo <Contato> , IRepositorioContato
     {
         public RepositorioContatoEmArquivo(ContextoDados contexto) : base(contexto)
         {
