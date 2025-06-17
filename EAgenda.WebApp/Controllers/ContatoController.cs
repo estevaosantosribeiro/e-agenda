@@ -2,11 +2,15 @@
 using EAgenda.Dominio.ModuloContato;
 using EAgenda.Infraestrutura.Arquivos.Compartilhado;
 using EAgenda.Infraestrutura.Arquivos.ModuloContato;
+using EAgenda.WebApp.Extensions;
+using EAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using static EAgenda.WebApp.Models.FormularioContatoViewModel;
+
+
 
 namespace EAgenda.WebApp.Controllers
 {
+    [Route("contatos")]
     public class ContatoController : Controller
     {
         private readonly ContextoDados contextoDados;
@@ -16,6 +20,7 @@ namespace EAgenda.WebApp.Controllers
             contextoDados = new ContextoDados(true);
             repositorioContato = new RepositorioContatoEmArquivo(contextoDados);
         }
+       
         public IActionResult Index()
         {
 
@@ -26,5 +31,22 @@ namespace EAgenda.WebApp.Controllers
 
             return View(visualizarVm);
         }
+        [HttpGet("cadastrar")]
+        public IActionResult Cadastrar()
+        {
+            var CadastrarVm = new CadastrarContatoViewModel();
+
+            return View(CadastrarVm);
+        }
+        [HttpPost("cadastrar")]
+        public IActionResult Cadastrar(CadastrarContatoViewModel ContatoVm)
+        {
+            var entidade = ContatoVm.ParaEntidade();
+
+            repositorioContato.CadastrarRegistro(entidade);
+
+            return RedirectToAction(nameof(Index));
+        }
+       
     }
 }
