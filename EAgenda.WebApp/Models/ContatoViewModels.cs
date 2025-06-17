@@ -36,7 +36,7 @@ namespace EAgenda.WebApp.Models
     {
         public CadastrarContatoViewModel() { }
 
-        public CadastrarContatoViewModel(string nome, string email, string telefone, string cargo, string empresa)
+        public CadastrarContatoViewModel(string nome, string email, string telefone, string cargo, string empresa) : this()
         {
             Nome = nome;
             Email = email;
@@ -46,6 +46,22 @@ namespace EAgenda.WebApp.Models
             Empresa = empresa;
         }
 
+    }
+    
+    public class EditarContatoViewModel : FormularioContatoViewModel
+    {
+        public Guid Id;
+        public EditarContatoViewModel() { }
+
+        public EditarContatoViewModel(Guid id,string nome, string email, string telefone ,string cargo,string empresa) :this()
+        {
+            Id = id;
+            Nome = nome;
+            Email = email;
+            Telefone = telefone;
+            Cargo = cargo;
+            Empresa = empresa;
+        }
     }
 
     public class DetalhesContatoViewModel

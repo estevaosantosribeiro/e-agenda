@@ -16,7 +16,7 @@ namespace EAgenda.Infraestrutura.Arquivos.ModuloContato
 
         protected override List<Contato> ObterRegistros()
         {
-            return contexto.contatos;
+            return contexto.Contatos;
         }
     }
 }

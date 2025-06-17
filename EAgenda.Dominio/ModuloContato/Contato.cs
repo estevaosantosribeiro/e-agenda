@@ -28,10 +28,10 @@ namespace EAgenda.Dominio.ModuloContato
         public override void AtualizarRegistro(Contato registroEditado)
         {
             Nome = registroEditado.Nome;
-            Nome = registroEditado.Email;
-            Nome = registroEditado.Telefone;
-            Nome = registroEditado.Cargo;
-            Nome = registroEditado.Empresa;
+            Email = registroEditado.Email;
+            Telefone = registroEditado.Telefone;
+            Cargo = registroEditado.Cargo;
+            Empresa = registroEditado.Empresa;
         }
     }
 }

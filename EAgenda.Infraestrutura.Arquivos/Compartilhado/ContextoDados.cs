@@ -17,15 +17,15 @@ public class ContextoDados
 
     public List<Tarefa> Tarefas { get; set; }
 
-    public List<Contato> contatos { get; set; }
-    public List<Compromisso> compromissos { get; set; }
+    public List<Contato> Contatos { get; set; }
+    public List<Compromisso> Compromissos { get; set; }
     public List<Categoria> Categorias { get; set; }
 
     public ContextoDados()
     {
         Tarefas = new List<Tarefa>();
-        contatos = new List<Contato>();
-        compromissos = new List<Compromisso>();
+        Contatos = new List<Contato>();
+        Compromissos = new List<Compromisso>();
     }
 
     public ContextoDados(bool carregarDados) : this()
@@ -79,10 +79,10 @@ public class ContextoDados
 
         Tarefas = contextoArmazenado.Tarefas;
 
-        contatos = contextoArmazenado.contatos;
+        Contatos = contextoArmazenado.Contatos;
 
         Categorias = contextoArmazenado.Categorias;
 
-        compromissos = contextoArmazenado.compromissos;
+        Compromissos = contextoArmazenado.Compromissos;
     }
 }
