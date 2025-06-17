@@ -1,8 +1,8 @@
-﻿@model CadastrarTarefaViewModel
+﻿@model EditarTarefaViewModel
 
 @{
     Layout = "_Layout";
-    ViewBag.Titulo = "Cadastro de Tarefa";
+    ViewBag.Titulo = "Edição de Tarefa";
 }
 
 <hr />
@@ -10,8 +10,8 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body p-md-5">
-                <form asp-action="Cadastrar">
-                    <h3>Formulário de Cadastro</h3>
+                <form asp-action="Editar">
+                    <h3>Formulário de Edição</h3>
 
                     @if (ViewData.ModelState["CadastroUnico"]?.Errors.Count > 0)
                     {
@@ -37,7 +37,7 @@
                     </div>
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="DataCriacao" class="control-label fs-5">Data de Criação:</label>
-                        <input asp-for="DataCriacao" class="form-control" type="date" value="@DateTime.Now" />
+                        <input asp-for="DataCriacao" class="form-control" type="date"  />
                         <span asp-validation-for="DataCriacao" class="text-danger"></span>
                     </div>
                     <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">

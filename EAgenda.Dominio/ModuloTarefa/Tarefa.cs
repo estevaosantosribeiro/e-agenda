@@ -9,7 +9,7 @@ public class Tarefa : EntidadeBase<Tarefa>
     public DateTime DataCriacao { get; set; }
     public DateTime DataConclusao { get; set; }
     public bool EstaConcluida { get; set; }
-    public List<ItemTarefa> ItensTarefas { get; set; }
+    public List<ItemTarefa> ItensTarefas { get; set; } = new List<ItemTarefa>();
     public decimal PercentualConcluido { get 
         {
             if (ItensTarefas == null || ItensTarefas.Count == 0)

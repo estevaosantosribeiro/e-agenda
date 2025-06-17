@@ -8,6 +8,15 @@ public class ItemTarefa : EntidadeBase<ItemTarefa>
     public bool EstaConcluida { get; set; }
     public Tarefa Tarefa { get; set; }
 
+    public ItemTarefa() { }
+
+    public ItemTarefa(string titulo, Tarefa tarefa) : this()
+    {
+        Titulo = titulo;
+        Tarefa = tarefa;
+        EstaConcluida = false;
+    }
+
     public override void AtualizarRegistro(ItemTarefa registroEditado)
     {
         throw new NotImplementedException();
