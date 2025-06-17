@@ -123,4 +123,18 @@ public class CategoriaController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet("detalhes/{id:guid}")]
+    public ActionResult Detalhes(Guid id)
+    {
+        var registroSelecionado = repositorioCategoria.SelecionarRegistroPorId(id);
+
+        var detalhesVM = new DetalhesCategoriaViewModel(
+            id,
+            registroSelecionado.Titulo,
+            registroSelecionado.Despesas
+        );
+
+        return View(detalhesVM);
+    }
 }
