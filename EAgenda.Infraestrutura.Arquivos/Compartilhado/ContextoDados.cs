@@ -26,6 +26,7 @@ public class ContextoDados
         Tarefas = new List<Tarefa>();
         contatos = new List<Contato>();
         compromissos = new List<Compromisso>();
+        Categorias = new List<Categoria>();
     }
 
     public ContextoDados(bool carregarDados) : this()
