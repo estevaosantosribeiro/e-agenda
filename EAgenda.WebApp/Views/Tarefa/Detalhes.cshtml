@@ -1,0 +1,140 @@
+﻿@model DetalhesTarefaViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Gerenciar Tarefas";
+    bool temItens = Model.ItensTarefas.Any();
+}
+
+<hr />
+<div class="row justify-content-center my-5">
+    <div class="col-md-8">
+        <div class="card rounded-4 border-0">
+            <div class="card-body p-md-5">
+                <h3>Gestão de Tarefas</h3>
+
+                <div class="row my-3">
+                    <div class="mt-2">
+                        <label class="control-label"><strong>Título:</strong> @Model.Titulo</label>
+                    </div>
+
+                    <div class="mt-2">
+                        <label class="control-label"><strong>Prioridade:</strong> @Model.Prioridade</label>
+                    </div>
+
+                    <div class="mt-2">
+                        <label class="control-label"><strong>Data de Criação:</strong> @Model.DataCriacao.ToShortDateString()</label>
+                    </div>
+
+                    <div class="mt-2">
+                        <label class="control-label">
+                            <strong>Data de Conclusão:</strong> @(Model.EstaConcluida ? Model.DataConclusao.ToShortDateString() : "Não concluída")
+                        </label>
+                    </div>
+                </div>
+
+                <h4 class="my-3">Itens da Tarefa</h4>
+
+                @if (!Model.EstaConcluida)
+                {
+                    <form class="d-flex flex-wrap gap-2 align-items-center" action="/tarefas/@Model.Id/adicionar-item" method="post">
+                        <div class="col-12 col-md-7">
+                            <label asp-for="Titulo" class="control-label">Tarefa: </label>
+                            <input asp-for="Titulo" class="form-control" />
+                            <span asp-validation-for="Titulo" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary align-self-end col">
+                            Adicionar
+                        </button>
+                    </form>
+                }
+                
+
+                @if (!temItens)
+                {
+                    <p class="fw-semibold mt-3">Ainda não há nenhuma tarefa relacionado à conta...</p>
+                }
+                else
+                {
+                    <table class="table table-sm table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model.ItensTarefas)
+                            {
+                                <tr>
+                                    <td>@i.Titulo</td>
+                                    <td>@(i.EstaConcluida ? "Concluído" : "Não concluído")</td>
+
+                                    @if (!Model.EstaConcluida)
+                                    {
+                                        @if (!i.EstaConcluida)
+                                        {
+                                            <td>
+                                                <div class="d-flex justify-content-center gap-2">
+                                                    <form action="/tarefas/@Model.Id/concluir-item/@i.Id" method="post">
+                                                        <button class="btn btn-sm btn-primary" title="Marcar como concluído">
+                                                            <i class="bi bi-check-circle"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <div class="d-flex justify-content-center gap-2">
+                                                    <form action="/tarefas/@Model.Id/desconcluir-item/@i.Id" method="post">
+                                                        <button class="btn btn-sm btn-primary" title="Desmarcar como concluído">
+                                                            <i class="bi bi-slash-circle"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        }
+
+                                        <td>
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <form action="/tarefas/@Model.Id/remover-item/@i.Id" method="post">
+                                                    <button class="btn btn-sm btn-danger" title="Remover">
+                                                        <i class="bi bi-trash3"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end mt-3">
+                        <label class="control-label"><strong>Percentual de Conclusão:</strong> @Model.PercentualConcluido.ToString("F2")%</label>
+                    </div>
+                }
+
+                <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
+                    <a href="/tarefas">Voltar para a listagem</a>
+                    @if (!temItens || Model.PercentualConcluido == 100)
+                    {
+                        var rota = Model.EstaConcluida ? "desconcluir-tarefa" : "concluir-tarefa";
+                        var texto = Model.EstaConcluida ? "Desmarcar como concluído" : "Marcar como concluído";
+
+                        <form action="/tarefas/@Model.Id/@rota" method="post">
+                            <button type="submit" class="btn btn-primary px-5">@texto</button>
+                        </form>
+                    }
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

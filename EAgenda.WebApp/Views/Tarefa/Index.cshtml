@@ -5,12 +5,34 @@
     ViewBag.Titulo = "Visualização de Tarefas";
 }
 
-<p>
+<div class="d-grid d-lg-flex flex-wrap gap-2 align-items-center">
     <a class="btn btn-primary px-4" href="/tarefas/cadastrar">
         <i class="bi bi-plus"></i>
         Cadastrar Novo/a
     </a>
-</p>
+
+    <div class="ms-lg-auto d-grid d-lg-flex flex-wrap gap-2">
+        <a class="btn btn-outline-primary px-3 btn-filtro" asp-action="Index">
+            <i class="bi bi-list"></i>
+            Todas as tarefas
+        </a>
+
+        <a class="btn btn-outline-primary px-3 btn-filtro" asp-action="Index" asp-route-status="pendentes">
+            <i class="bi bi-cart"></i>
+            Tarefas pendentes
+        </a>
+
+        <a class="btn btn-outline-primary px-3 btn-filtro" asp-action="Index" asp-route-status="concluidas">
+            <i class="bi bi-cart-check"></i>
+            Tarefas concluidas
+        </a>
+
+        <a class="btn btn-outline-primary px-3 btn-filtro" asp-action="Index" asp-route-status="prioridades">
+            <i class="bi bi-cash-stack"></i>
+            Tarefas por prioridade
+        </a>
+    </div>
+</div>
 
 <hr />
 
@@ -22,9 +44,13 @@
                 <div class="card-body">
                     <h5 class="card-title">Titulo: @item.Titulo</h5>
                     <p class="card-text"><span class="fw-semibold">Prioridade:</span> @item.Prioridade</p>
-                    <p class="card-text"><span class="fw-semibold">Data:</span> @item.DataCriacao.ToShortDateString()</p>
+                    <p class="card-text"><span class="fw-semibold">Data de Criação:</span> @item.DataCriacao.ToShortDateString()</p>
+                    <p class="card-text"><span class="fw-semibold">Data de Conclusão:</span> @(item.EstaConcluida ? @item.DataConclusao.ToShortDateString() : "Não Concluído")</p>
 
                     <span class="d-flex gap-1 justify-content-end mt-4">
+                        <a href="/tarefas/detalhes/@item.Id" class="btn btn-secondary">
+                            <i class="bi bi-clipboard-data-fill"></i>
+                        </a>
                         <a href="/tarefas/editar/@item.Id" class="btn btn-primary">
                             <i class="bi bi-pencil-square"></i>
                         </a>
@@ -37,3 +63,7 @@
         </div>
     }
 </div>
+
+@section Scripts {
+    <script src="~/js/ativacaoFiltrosTarefas.js"></script>
+}

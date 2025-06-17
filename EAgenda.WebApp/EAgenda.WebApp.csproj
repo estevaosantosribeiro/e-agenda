@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EAgenda.Dominio\EAgenda.Dominio.csproj" />
     <ProjectReference Include="..\EAgenda.Infraestrutura.Arquivos\EAgenda.Infraestrutura.Arquivos.csproj" />
   </ItemGroup>

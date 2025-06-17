@@ -89,7 +89,7 @@ public class DetalhesTarefaViewModel
     public DateTime DataConclusao { get; set; }
     public bool EstaConcluida { get; set; }
     public decimal PercentualConcluido { get; set; }
-    public List<ItemTarefaViewModel>? ItensTarefas { get; set; }
+    public List<ItemTarefaViewModel> ItensTarefas { get; set; }
 
     public DetalhesTarefaViewModel(
         Guid id, 
@@ -138,4 +138,12 @@ public class ItemTarefaViewModel
         EstaConcluida = estaConcluida;
         Tarefa = tarefa;
     }
+}
+
+public class AdicionarItemTarefaViewModel
+{
+    public Guid Id { get; set; }
+    [Required(ErrorMessage = "O campo \"Título\" é obrigatório.")]
+    [MinLength(2, ErrorMessage = "O campo \"Título\" precisa conter ao menos 2 caracteres.")]
+    public string Titulo { get; set; }
 }

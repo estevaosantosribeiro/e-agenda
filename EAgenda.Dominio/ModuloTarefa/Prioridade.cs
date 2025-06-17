@@ -3,6 +3,6 @@
 public enum Prioridade
 {
     Baixa = 0,
-    Normal = 1,
+    Média = 1,
     Alta = 2,
 }

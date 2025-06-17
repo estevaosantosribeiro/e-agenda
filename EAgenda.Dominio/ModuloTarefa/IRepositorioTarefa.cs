@@ -2,4 +2,9 @@
 
 namespace EAgenda.Dominio.ModuloTarefa;
 
-public interface IRepositorioTarefa : IRepositorio<Tarefa>;
+public interface IRepositorioTarefa : IRepositorio<Tarefa>
+{ 
+    List<Tarefa> SelecionarTarefasPendentes();
+    List<Tarefa> SelecionarTarefasConcluidas();
+    List<Tarefa> SelecionarTarefasPorPrioridade();
+}
