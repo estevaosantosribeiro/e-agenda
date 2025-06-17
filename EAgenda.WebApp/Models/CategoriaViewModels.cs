@@ -26,6 +26,20 @@ public class CadastrarCategoriaViewModel : FormularioCategoriaViewModel
     }
 }
 
+public class EditarCategoriaViewModel : FormularioCategoriaViewModel
+{
+    public Guid Id { get; set; }
+
+    public EditarCategoriaViewModel() { }
+
+    public EditarCategoriaViewModel(Guid id, string titulo, string despesas) : this()
+    {
+        Id = id;
+        Titulo = titulo;
+        Despesas = despesas;
+    }
+}
+
 public class VisualizarCategoriasViewModel
 {
     public List<DetalhesCategoriaViewModel> Registros { get; set; }
