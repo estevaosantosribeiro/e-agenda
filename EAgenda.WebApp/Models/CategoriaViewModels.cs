@@ -40,6 +40,20 @@ public class EditarCategoriaViewModel : FormularioCategoriaViewModel
     }
 }
 
+public class ExcluirCategoriaViewModel
+{
+    public Guid Id { get; set; }
+    public string Titulo { get; set; }
+
+    public ExcluirCategoriaViewModel() { }
+
+    public ExcluirCategoriaViewModel(Guid id, string titulo) : this()
+    {
+        Id = id;
+        Titulo = titulo;
+    }
+}
+
 public class VisualizarCategoriasViewModel
 {
     public List<DetalhesCategoriaViewModel> Registros { get; set; }

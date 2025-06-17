@@ -106,4 +106,21 @@ public class CategoriaController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet("excluir/{id:guid}")]
+    public ActionResult Excluir(Guid id)
+    {
+        var registroSelecionado = repositorioCategoria.SelecionarRegistroPorId(id);
+
+        var excluirVM = new ExcluirCategoriaViewModel(registroSelecionado.Id, registroSelecionado.Titulo);
+
+        return View(excluirVM);
+    }
+
+    [HttpPost("excluir/{id:guid}")]
+    public ActionResult ExcluirConfirmado(Guid id)
+    {
+        repositorioCategoria.ExcluirRegistro(id);
+
+        return RedirectToAction(nameof(Index));
+    }
 }
