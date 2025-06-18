@@ -17,6 +17,7 @@ namespace EAgenda.WebApp.Extensions
         {
             return new Contato(contatoVm.Nome, contatoVm.Email, contatoVm.Telefone, contatoVm.Cargo, contatoVm.Empresa);
         }
+        
     }
 }
 

@@ -24,8 +24,6 @@ public class ContextoDados
     public ContextoDados()
     {
         Tarefas = new List<Tarefa>();
-        contatos = new List<Contato>();
-        compromissos = new List<Compromisso>();
         Categorias = new List<Categoria>();
         Contatos = new List<Contato>();
         Compromissos = new List<Compromisso>();

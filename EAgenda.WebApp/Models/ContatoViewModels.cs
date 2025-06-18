@@ -47,13 +47,13 @@ namespace EAgenda.WebApp.Models
         }
 
     }
-    
+
     public class EditarContatoViewModel : FormularioContatoViewModel
     {
         public Guid Id;
         public EditarContatoViewModel() { }
 
-        public EditarContatoViewModel(Guid id,string nome, string email, string telefone ,string cargo,string empresa) :this()
+        public EditarContatoViewModel(Guid id, string nome, string email, string telefone, string cargo, string empresa) : this()
         {
             Id = id;
             Nome = nome;
@@ -83,6 +83,19 @@ namespace EAgenda.WebApp.Models
             Empresa = empresa;
         }
     }
+    public class ExcluirContatoViewModel
+    {
+        public Guid Id { get; set; }
+        public string Nome { get; set; }
+        public ExcluirContatoViewModel() { }
 
+        public ExcluirContatoViewModel(Guid id, string nome) : this()
+        {
+            Id = id;
+            Nome = nome;
+
+        }
+
+    }
 }
 
