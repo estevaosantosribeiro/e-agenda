@@ -32,6 +32,7 @@ namespace EAgenda.WebApp.Controllers
             return View(visualizarVm);
         }
         [HttpGet("cadastrar")]
+
         public IActionResult Cadastrar()
         {
             var CadastrarVm = new CadastrarContatoViewModel();
@@ -47,6 +48,44 @@ namespace EAgenda.WebApp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-       
+        [HttpGet("editar/{Id:guid}")]
+
+        public IActionResult Editar(Guid id)
+        {
+           var registroSelecionado = repositorioContato.SelecionarRegistroPorId(id);
+
+           var editarVm = new EditarContatoViewModel(id,registroSelecionado.Nome,registroSelecionado.Email,registroSelecionado.Telefone,registroSelecionado.Cargo,registroSelecionado.Empresa);
+
+            return View(editarVm);
+        }
+
+        [HttpPost("editar/{Id:guid}")]
+        public IActionResult Editar(Guid id, EditarContatoViewModel editarVm)
+        {
+            var entidade = editarVm.ParaEntidade();
+
+            repositorioContato.EditarRegistro(id, entidade);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet("excluir/{Id:guid}")]
+
+        public IActionResult Excluir(Guid Id)
+        {
+            var registroSelecionado = repositorioContato.SelecionarRegistroPorId(Id);
+
+            var excluirVM = new ExcluirContatoViewModel(registroSelecionado.Id,registroSelecionado.Nome);
+
+            return View(excluirVM);
+        }
+
+        [HttpPost("excluir/{Id:guid}")]
+        public IActionResult ExcluirConfirmado(Guid Id, ExcluirContatoViewModel excluirVM)
+        {
+            repositorioContato.ExcluirRegistro(Id);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

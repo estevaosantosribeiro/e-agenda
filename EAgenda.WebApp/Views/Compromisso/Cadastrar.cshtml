@@ -1,0 +1,46 @@
+﻿@model CadastrarCompromissoViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Cadastro de Compromissos";
+}
+
+<hr />
+<div class="row justify-content-center my-5">
+    <div class="col-md-8">
+        <div class="card rounded-4 border-0">
+            <div class="card-body p-md-5">
+                <form action="/compromissos/cadastrar" method="post">
+                    <h3>Formulário de Cadastro</h3>
+
+                    <div class="form-group d-grid gap-2 mt-5">
+                        <label asp-for="Assunto" class="control-label fs-5">Assunto:</label>
+                        <input asp-for="Assunto" class="form-control"/>
+                        <span asp-validation-for="Assunto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="DataDeOcorrencia" class="control-label fs-5">Data de ocorrência:</label>
+                        <input asp-for="DataDeOcorrencia" type="date" class="form-control"/>
+                    </div>
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="HoraDeInicio" class="control-label fs-5">Hora de ínicio:</label>
+                        <input asp-for="HoraDeInicio" type="time" class="form-control"/>
+                    </div>
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="HoraDeTermino" class="control-label fs-5">Hora de término:</label>
+                        <input asp-for="HoraDeTermino" type="time" class="form-control"/>
+                    </div>
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="TipoDeOcorrido" class="control-label fs-5">Tipo de ocorrido:</label>
+                        <input asp-for="TipoDeOcorrido" class="form-control"/>
+                    </div>                   
+                    <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
+                        <a href="/compromissos">Voltar para a listagem</a>
+                        <button type="submit" class="btn btn-primary rounded-4 px-5">Confirmar</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
