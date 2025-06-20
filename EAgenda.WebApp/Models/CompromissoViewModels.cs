@@ -4,8 +4,8 @@ using EAgenda.WebApp.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Win32;
 
-namespace EAgenda.WebApp.Models
-{
+namespace EAgenda.WebApp.Models;
+
     public class FormularioCompromissoViewModel
     {
         public string Assunto { get; set; }
@@ -26,7 +26,23 @@ namespace EAgenda.WebApp.Models
             HoraDeTermino = horaDeTermino;
             TipoDeOcorrido = tipoDeOcorrido;
         }
-    } 
+    }
+public class EditarCompromissoViewModel : FormularioCompromissoViewModel
+{
+    public Guid Id { get; set; }
+
+    public EditarCompromissoViewModel() { }
+
+    public EditarCompromissoViewModel(Guid id, string assunto, DateOnly dataDeOcorrencia, TimeSpan horaDeInicio, TimeSpan horaDeTermino, string tipoDeOcorrido) : this()
+        {
+            Id = id;
+            Assunto = assunto;
+            DataDeOcorrencia = dataDeOcorrencia;
+            HoraDeInicio = horaDeInicio;
+            HoraDeTermino = horaDeTermino;
+            TipoDeOcorrido = tipoDeOcorrido;
+        }
+    }
 
         public class VisualizarCompromissoViewModel
     {
@@ -34,7 +50,7 @@ namespace EAgenda.WebApp.Models
 
         public List<DetalhesCompromissoViewModel> Registros;
 
-        public VisualizarCompromissoViewModel(List<Compromisso> compromisso)
+        public VisualizarCompromissoViewModel(List<Compromisso> compromisso) 
         {
             Registros = new List<DetalhesCompromissoViewModel>();
 
@@ -64,7 +80,4 @@ namespace EAgenda.WebApp.Models
 
         }
     }
-
-
-}
 

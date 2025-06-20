@@ -43,5 +43,28 @@ namespace EAgenda.WebApp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet("editar/{Id:Guid}")]
+
+        public IActionResult Editar(Guid id)
+        {
+            var registroSelecionado = repositorio.SelecionarRegistroPorId(id);
+
+            var editarVM = new EditarCompromissoViewModel(registroSelecionado.Id, registroSelecionado.Assunto, registroSelecionado.DataDeOcorrencia, registroSelecionado.HoraDeInicio, registroSelecionado.HoraDeTermino, registroSelecionado.TipoDeOcorrido);
+
+           return View(editarVM);
+        }
+        [HttpPost("editar/{Id:Guid}")]
+
+        public IActionResult Editar(Guid id, EditarCompromissoViewModel editarVM)
+        {
+            var entidade = editarVM.ParaEntidade();
+
+            repositorio.EditarRegistro(id, entidade);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
+
+    
 }
