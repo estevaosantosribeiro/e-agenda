@@ -5,6 +5,7 @@ using EAgenda.Dominio.ModuloContato;
 using EAgenda.Dominio.ModuloTarefa;
 using EAgenda.Dominio.ModuloCategoria;
 using EAgenda.Dominio.Modulo_Compromissos;
+using EAgenda.Dominio.ModuloDespesa;
 
 namespace EAgenda.Infraestrutura.Arquivos.Compartilhado;
 
@@ -20,6 +21,7 @@ public class ContextoDados
     public List<Contato> contatos { get; set; }
     public List<Compromisso> compromissos { get; set; }
     public List<Categoria> Categorias { get; set; }
+    public List<Despesa> Despesas { get; set; }
 
     public ContextoDados()
     {
@@ -27,6 +29,7 @@ public class ContextoDados
         contatos = new List<Contato>();
         compromissos = new List<Compromisso>();
         Categorias = new List<Categoria>();
+        Despesas = new List<Despesa>();
     }
 
     public ContextoDados(bool carregarDados) : this()
@@ -85,5 +88,7 @@ public class ContextoDados
         Categorias = contextoArmazenado.Categorias;
 
         compromissos = contextoArmazenado.compromissos;
+
+        Despesas = contextoArmazenado.Despesas;
     }
 }

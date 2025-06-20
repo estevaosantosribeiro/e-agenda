@@ -7,15 +7,16 @@ public static class CategoriaExtensions
 {
     public static Categoria ParaEntidade(this FormularioCategoriaViewModel formularioVM)
     {
-        return new Categoria(formularioVM.Titulo, formularioVM.Despesas);
+        return new Categoria(formularioVM.Titulo);
     }
 
-    public static DetalhesCategoriaViewModel ParaDetalhesVM(this Categoria garcom)
+    public static DetalhesCategoriaViewModel ParaDetalhesVM(this Categoria categoria)
     {
         return new DetalhesCategoriaViewModel(
-                garcom.Id,
-                garcom.Titulo,
-                garcom.Despesas
+                categoria.Id,
+                categoria.Titulo,
+                categoria.Despesas?.Count ?? 0,
+                categoria.Despesas?.Select(d => d.Descricao).ToList() ?? new()
         );
     }
 }

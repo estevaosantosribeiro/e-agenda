@@ -23,14 +23,27 @@
                 </div>
                 <div class="form-group d-grid gap-2 mt-3">
                     <label for="Despesas" class="control-label fs-5">Despesas:</label>
-                    <input name="Despesas" class="form-control" type="text" value="@Model.Despesas" readonly disabled />
+                    <div class="form-control" style="height:auto; min-height:38px;" readonly disabled>
+                        @if (Model.NomesDespesas.Any())
+                        {
+                            <ul class="mb-0">
+                                @foreach (var nome in Model.NomesDespesas)
+                                {
+                                    <li>@nome</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <em>Nenhuma despesa vinculada</em>
+                        }
+                    </div>
                 </div>
                 <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
                     <a href="/categorias">Voltar para a listagem</a>
                 </div>
             </div>
         </div>
-
 
     </div>
 </div>

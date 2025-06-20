@@ -1,6 +1,8 @@
 ﻿using EAgenda.Dominio.ModuloCategoria;
+using EAgenda.Dominio.ModuloDespesa;
 using EAgenda.Infraestrutura.Arquivos.Compartilhado;
 using EAgenda.Infraestrutura.Arquivos.ModuloCategoria;
+using EAgenda.Infraestrutura.Arquivos.ModuloDespesa;
 using EAgenda.WebApp.Extensions;
 using EAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +14,13 @@ public class CategoriaController : Controller
 {
     private readonly ContextoDados contextoDados;
     private readonly IRepositorioCategoria repositorioCategoria;
+    private readonly IRepositorioDespesa repositorioDespesa;
 
     public CategoriaController()
     {
         contextoDados = new ContextoDados(true);
         repositorioCategoria = new RepositorioCategoriaEmArquivo(contextoDados);
+        repositorioDespesa = new RepositorioDespesaEmArquivo(contextoDados);
     }
 
     public IActionResult Index()
@@ -74,8 +78,7 @@ public class CategoriaController : Controller
 
         var editarVM = new EditarCategoriaViewModel(
             id,
-            registroSelecionado.Titulo,
-            registroSelecionado.Despesas
+            registroSelecionado.Titulo
         );
 
         return View(editarVM);
@@ -132,7 +135,8 @@ public class CategoriaController : Controller
         var detalhesVM = new DetalhesCategoriaViewModel(
             id,
             registroSelecionado.Titulo,
-            registroSelecionado.Despesas
+            registroSelecionado.Despesas?.Count ?? 0,
+            registroSelecionado.Despesas?.Select(d => d.Descricao).ToList() ?? new()
         );
 
         return View(detalhesVM);

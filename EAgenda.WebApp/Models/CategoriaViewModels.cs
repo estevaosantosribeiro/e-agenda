@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EAgenda.Dominio.ModuloCategoria;
+using EAgenda.Dominio.ModuloDespesa;
 using EAgenda.WebApp.Extensions;
 
 namespace EAgenda.WebApp.Models;
@@ -10,19 +11,15 @@ public class FormularioCategoriaViewModel
     [MinLength(3, ErrorMessage = "O campo \"Titulo\" precisa conter ao menos 3 caracteres.")]
     [MaxLength(100, ErrorMessage = "O campo \"Titulo\" precisa conter no máximo 100 caracteres.")]
     public string Titulo { get; set; }
-
-    [Required(ErrorMessage = "O campo \"Despesas\" é obrigatório.")]
-    public string Despesas { get; set; }
 }
 
 public class CadastrarCategoriaViewModel : FormularioCategoriaViewModel
 {
     public CadastrarCategoriaViewModel() { }
 
-    public CadastrarCategoriaViewModel(string titulo, string despesas) : this()
+    public CadastrarCategoriaViewModel(string titulo) : this()
     {
         Titulo = titulo;
-        Despesas = despesas;
     }
 }
 
@@ -32,11 +29,10 @@ public class EditarCategoriaViewModel : FormularioCategoriaViewModel
 
     public EditarCategoriaViewModel() { }
 
-    public EditarCategoriaViewModel(Guid id, string titulo, string despesas) : this()
+    public EditarCategoriaViewModel(Guid id, string titulo) : this()
     {
         Id = id;
         Titulo = titulo;
-        Despesas = despesas;
     }
 }
 
@@ -71,12 +67,19 @@ public class DetalhesCategoriaViewModel
 {
     public Guid Id { get; set; }
     public string Titulo { get; set; }
-    public string Despesas { get; set; }
+    public int QuantidadeDespesas { get; set; }
+    public List<string> NomesDespesas { get; set; }
 
-    public DetalhesCategoriaViewModel(Guid id, string titulo, string despesas)
+    public DetalhesCategoriaViewModel(
+        Guid id, 
+        string titulo,
+        int quantidadeDespesas,
+        List<string> nomesDespesas
+    )
     {
         Id = id;
         Titulo = titulo;
-        Despesas = despesas;
+        QuantidadeDespesas = quantidadeDespesas;
+        NomesDespesas = nomesDespesas;
     }
 }
