@@ -15,8 +15,8 @@ public class FormularioDespesaViewModel
     public DateTime? DataOcorrencia { get; set; } = DateTime.Today;
 
     [Required(ErrorMessage = "O campo \"Valor\" é obrigatório.")]
-    [Range(1, int.MaxValue, ErrorMessage = "O valor deve ser maior que zero.")]
-    public int Valor { get; set; }
+    [Range(0.01, double.MaxValue, ErrorMessage = "O valor deve ser maior que zero.")]
+    public decimal Valor { get; set; }
 
     [Required(ErrorMessage = "O campo \"Forma de Pagamento\" é obrigatório.")]
     [RegularExpression("^(À vista|Crédito|Débito)$", ErrorMessage = "A forma de pagamento deve ser 'À vista', 'Crédito' ou 'Débito'.")]
@@ -63,7 +63,7 @@ public class EditarDespesaViewModel : FormularioDespesaViewModel
         Guid id,
         string descricao,
         DateTime dataOcorrencia,
-        int valor,
+        decimal valor,
         string formaPagamento,
         List<Categoria> categoriasDisponiveis,
         List<Guid> categoriasSelecionadas
@@ -111,7 +111,7 @@ public class DetalhesDespesaViewModel
     public Guid Id { get; set; }
     public string Descricao { get; set; }
     public DateTime DataOcorrencia { get; set; }
-    public int Valor { get; set; }
+    public decimal Valor { get; set; }
     public string FormaPagamento { get; set; }
     public List<Categoria> Categorias { get; set; }
 
@@ -119,7 +119,7 @@ public class DetalhesDespesaViewModel
         Guid id, 
         string descricao, 
         DateTime dataOcorrencia, 
-        int valor,
+        decimal valor,
         string formaPagamento,
         List<Categoria> categorias
     )

@@ -7,7 +7,7 @@ public class Despesa : EntidadeBase<Despesa>
 {
     public string Descricao { get; set; }
     public DateTime? DataOcorrencia { get; set; }
-    public int Valor { get; set; }
+    public decimal Valor { get; set; }
     public string FormaPagamento { get; set; }
     public List<Categoria> Categorias { get; set; }
 
@@ -16,7 +16,7 @@ public class Despesa : EntidadeBase<Despesa>
     public Despesa(
         string descricao, 
         DateTime? dataOcorrencia, 
-        int valor, 
+        decimal valor, 
         string formaPagamento, 
         List<Categoria> categorias
     )
