@@ -129,4 +129,34 @@ public class DespesaController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet("excluir/{id:guid}")]
+    public IActionResult Excluir(Guid id)
+    {
+        var despesaSelecionada = repositorioDespesa.SelecionarRegistroPorId(id);
+
+        if (despesaSelecionada == null)
+            return NotFound();
+
+        var excluirVM = new ExcluirDespesaViewModel(despesaSelecionada.Id, despesaSelecionada.Descricao);
+
+        return View(excluirVM);
+    }
+
+    [HttpPost("excluir/{id:guid}")]
+    [ValidateAntiForgeryToken]
+    public IActionResult ExcluirConfirmado(Guid id)
+    {
+        var despesaSelecionada = repositorioDespesa.SelecionarRegistroPorId(id);
+
+        if (despesaSelecionada == null)
+            return NotFound();
+
+        foreach (var categoria in despesaSelecionada.Categorias)
+            categoria.RemoverDespesa(despesaSelecionada);
+
+        repositorioDespesa.ExcluirRegistro(id);
+
+        return RedirectToAction(nameof(Index));
+    }
+
 }
