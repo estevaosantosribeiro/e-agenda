@@ -43,6 +43,46 @@ public class CadastrarDespesaViewModel : FormularioDespesaViewModel
     }
 }
 
+public class EditarDespesaViewModel : FormularioDespesaViewModel
+{
+    public Guid Id { get; set; }
+
+    public EditarDespesaViewModel() { }
+
+    public EditarDespesaViewModel(
+        Guid id,
+        string descricao,
+        DateTime dataOcorrencia,
+        int valor,
+        string formaPagamento,
+        List<Categoria> categoriasDisponiveis,
+        List<Guid> categoriasSelecionadas
+    )
+    {
+        Id = id;
+        Descricao = descricao;
+        DataOcorrencia = dataOcorrencia;
+        Valor = valor;
+        FormaPagamento = formaPagamento;
+        CategoriasDisponiveis = categoriasDisponiveis;
+        CategoriasSelecionadas = categoriasSelecionadas;
+    }
+}
+
+public class ExcluirDespesaViewModel
+{
+    public Guid Id { get; set; }
+    public string Descricao { get; set; }
+
+    public ExcluirDespesaViewModel() { }
+
+    public ExcluirDespesaViewModel(Guid id, string descricao)
+    {
+        Id = id;
+        Descricao = descricao;
+    }
+}
+
 public class VisualizarDespesasViewModel
 {
     public List<DetalhesDespesaViewModel> Registros { get; set; }

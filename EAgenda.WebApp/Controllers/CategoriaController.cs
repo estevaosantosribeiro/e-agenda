@@ -120,12 +120,27 @@ public class CategoriaController : Controller
     }
 
     [HttpPost("excluir/{id:guid}")]
+    [ValidateAntiForgeryToken]
     public ActionResult ExcluirConfirmado(Guid id)
     {
+        var categoria = repositorioCategoria.SelecionarRegistroPorId(id);
+
+        if (categoria == null)
+            return NotFound();
+
+        if (categoria.Despesas != null && categoria.Despesas.Any())
+        {
+            ModelState.AddModelError("ExclusaoNaoPermitida", "Não é possível excluir uma categoria que possui despesas vinculadas.");
+
+            var visualizarVM = new VisualizarCategoriasViewModel(repositorioCategoria.SelecionarRegistros());
+            return View("Index", visualizarVM);
+        }
+
         repositorioCategoria.ExcluirRegistro(id);
 
         return RedirectToAction(nameof(Index));
     }
+
 
     [HttpGet("detalhes/{id:guid}")]
     public ActionResult Detalhes(Guid id)

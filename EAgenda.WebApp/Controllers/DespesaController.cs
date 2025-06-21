@@ -73,4 +73,60 @@ public class DespesaController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet("editar/{id:guid}")]
+    public IActionResult Editar(Guid id)
+    {
+        var despesaSelecionada = repositorioDespesa.SelecionarRegistroPorId(id);
+
+        if (despesaSelecionada == null)
+            return NotFound();
+
+        var categoriasDisponiveis = repositorioCategoria.SelecionarRegistros();
+
+        var editarVM = new EditarDespesaViewModel(
+            id,
+            despesaSelecionada.Descricao,
+            despesaSelecionada.DataOcorrencia,
+            despesaSelecionada.Valor,
+            despesaSelecionada.FormaPagamento,
+            categoriasDisponiveis,
+            despesaSelecionada.Categorias.Select(c => c.Id).ToList()
+        );
+
+        return View(editarVM);
+    }
+
+    [HttpPost("editar/{id:guid}")]
+    [ValidateAntiForgeryToken]
+    public IActionResult Editar(Guid id, EditarDespesaViewModel editarVM)
+    {
+        editarVM.CategoriasDisponiveis = repositorioCategoria.SelecionarRegistros();
+
+        ModelState.Remove(nameof(editarVM.CategoriasDisponiveis));
+
+        if (!ModelState.IsValid)
+            return View(editarVM);
+
+        var categoriasSelecionadas = editarVM
+            .CategoriasSelecionadas
+            .Select(id => repositorioCategoria.SelecionarRegistroPorId(id))
+            .ToList();
+
+        var despesaAntiga = repositorioDespesa.SelecionarRegistroPorId(id);
+
+        foreach (var categoria in contextoDados.Categorias)
+            categoria.RemoverDespesa(despesaAntiga);
+
+        var novaDespesa = editarVM.ParaEntidade(categoriasSelecionadas);
+        novaDespesa.Id = id;
+
+        foreach (var categoria in categoriasSelecionadas)
+            categoria.AdicionarDespesa(novaDespesa);
+
+        repositorioDespesa.EditarRegistro(id, novaDespesa);
+
+        return RedirectToAction(nameof(Index));
+    }
+
 }

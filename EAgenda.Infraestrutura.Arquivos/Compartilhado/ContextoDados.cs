@@ -87,9 +87,8 @@ public class ContextoDados
 
         Categorias = contextoArmazenado.Categorias;
 
-        Compromissos = contextoArmazenado.Compromissos;
-        compromissos = contextoArmazenado.compromissos;
-
         Despesas = contextoArmazenado.Despesas;
+
+        Compromissos = contextoArmazenado.Compromissos;
     }
 }

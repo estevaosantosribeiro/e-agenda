@@ -22,15 +22,22 @@ public class Categoria : EntidadeBase<Categoria>
         Despesas = registroEditado.Despesas;
     }
 
-    public void AdicionarDespesa(Despesa novaDespesa)
+    public void AdicionarDespesa(Despesa despesa)
     {
-        if (!Despesas.Contains(novaDespesa))
-            Despesas.Add(novaDespesa);
+        if (Despesas == null)
+            Despesas = new List<Despesa>();
+
+        if (!Despesas.Any(d => d.Id == despesa.Id))
+            Despesas.Add(despesa);
     }
 
-    public void RemoverDespesa(Despesa novaDespesa)
+
+    public void RemoverDespesa(Despesa despesa)
     {
-        if (Despesas.Contains(novaDespesa))
-            Despesas.Remove(novaDespesa);
+        if (Despesas == null)
+            return;
+
+        Despesas.RemoveAll(d => d.Id == despesa.Id);
     }
+
 }
