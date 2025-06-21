@@ -22,7 +22,7 @@ public static class DespesaExtensions
         return new DetalhesDespesaViewModel(
                 despesa.Id,
                 despesa.Descricao,
-                despesa.DataOcorrencia,
+                despesa.DataOcorrencia ?? DateTime.Now,
                 despesa.Valor,
                 despesa.FormaPagamento,
                 despesa.Categorias

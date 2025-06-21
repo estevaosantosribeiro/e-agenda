@@ -8,18 +8,28 @@ namespace EAgenda.WebApp.Models;
 public class FormularioDespesaViewModel
 {
     [Required(ErrorMessage = "O campo \"Descrição\" é obrigatório.")]
-    [MinLength(3, ErrorMessage = "O campo \"Descrição\" precisa conter ao menos 3 caracteres.")]
+    [MinLength(2, ErrorMessage = "O campo \"Descrição\" precisa conter ao menos 2 caracteres.")]
     [MaxLength(100, ErrorMessage = "O campo \"Descrição\" precisa conter no máximo 100 caracteres.")]
     public string Descricao { get; set; }
-    public DateTime DataOcorrencia { get; set; }
+
+    public DateTime? DataOcorrencia { get; set; } = DateTime.Today;
+
     [Required(ErrorMessage = "O campo \"Valor\" é obrigatório.")]
+    [Range(1, int.MaxValue, ErrorMessage = "O valor deve ser maior que zero.")]
     public int Valor { get; set; }
+
     [Required(ErrorMessage = "O campo \"Forma de Pagamento\" é obrigatório.")]
+    [RegularExpression("^(À vista|Crédito|Débito)$", ErrorMessage = "A forma de pagamento deve ser 'À vista', 'Crédito' ou 'Débito'.")]
     public string FormaPagamento { get; set; }
-    [Required(ErrorMessage = "O campo \"Categorias\" é obrigatório.")]
+
+    [MinLength(1, ErrorMessage = "Selecione ao menos uma categoria.")]
+    [Required(ErrorMessage = "Selecione ao menos uma categoria.")]
     public List<Guid> CategoriasSelecionadas { get; set; }
+
     public List<Categoria> CategoriasDisponiveis { get; set; }
 }
+
+
 
 public class CadastrarDespesaViewModel : FormularioDespesaViewModel
 {

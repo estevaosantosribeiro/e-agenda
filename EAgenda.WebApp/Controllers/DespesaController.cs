@@ -87,7 +87,7 @@ public class DespesaController : Controller
         var editarVM = new EditarDespesaViewModel(
             id,
             despesaSelecionada.Descricao,
-            despesaSelecionada.DataOcorrencia,
+            despesaSelecionada.DataOcorrencia ?? DateTime.Now,
             despesaSelecionada.Valor,
             despesaSelecionada.FormaPagamento,
             categoriasDisponiveis,
@@ -170,7 +170,7 @@ public class DespesaController : Controller
         var detalhesVM = new DetalhesDespesaViewModel(
             despesa.Id,
             despesa.Descricao,
-            despesa.DataOcorrencia,
+            despesa.DataOcorrencia ?? DateTime.Now,
             despesa.Valor,
             despesa.FormaPagamento,
             despesa.Categorias

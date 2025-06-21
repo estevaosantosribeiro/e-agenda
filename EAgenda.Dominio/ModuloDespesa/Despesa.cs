@@ -6,7 +6,7 @@ namespace EAgenda.Dominio.ModuloDespesa;
 public class Despesa : EntidadeBase<Despesa>
 {
     public string Descricao { get; set; }
-    public DateTime DataOcorrencia { get; set; }
+    public DateTime? DataOcorrencia { get; set; }
     public int Valor { get; set; }
     public string FormaPagamento { get; set; }
     public List<Categoria> Categorias { get; set; }
@@ -15,7 +15,7 @@ public class Despesa : EntidadeBase<Despesa>
 
     public Despesa(
         string descricao, 
-        DateTime dataOcorrencia, 
+        DateTime? dataOcorrencia, 
         int valor, 
         string formaPagamento, 
         List<Categoria> categorias
