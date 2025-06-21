@@ -159,4 +159,24 @@ public class DespesaController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet("detalhes/{id:guid}")]
+    public IActionResult Detalhes(Guid id)
+    {
+        var despesa = repositorioDespesa.SelecionarRegistroPorId(id);
+
+        if (despesa == null)
+            return NotFound();
+
+        var detalhesVM = new DetalhesDespesaViewModel(
+            despesa.Id,
+            despesa.Descricao,
+            despesa.DataOcorrencia,
+            despesa.Valor,
+            despesa.FormaPagamento,
+            despesa.Categorias
+        );
+
+        return View(detalhesVM);
+    }
+
 }

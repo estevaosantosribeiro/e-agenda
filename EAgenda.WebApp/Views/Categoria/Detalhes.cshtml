@@ -1,8 +1,8 @@
-﻿@model DetalhesCategoriaViewModel
+﻿@model DetalhesDespesaViewModel
 
 @{
     Layout = "_Layout";
-    ViewBag.Titulo = "Detalhes da Categoria";
+    ViewBag.Titulo = "Detalhes da Despesa";
 }
 
 <hr />
@@ -14,33 +14,51 @@
                 <h3>Detalhes</h3>
 
                 <div class="form-group d-grid gap-2 mt-3">
-                    <label for="Id" class="control-label fs-5">Id:</label>
-                    <input name="Id" class="form-control" value="@Model.Id" readonly disabled />
+                    <label class="control-label fs-5">Id:</label>
+                    <input class="form-control" value="@Model.Id" readonly disabled />
                 </div>
+
                 <div class="form-group d-grid gap-2 mt-3">
-                    <label for="Titulo" class="control-label fs-5">Título:</label>
-                    <input name="Titulo" class="form-control" type="text" value="@Model.Titulo" readonly disabled />
+                    <label class="control-label fs-5">Descrição:</label>
+                    <input class="form-control" value="@Model.Descricao" readonly disabled />
                 </div>
+
                 <div class="form-group d-grid gap-2 mt-3">
-                    <label for="Despesas" class="control-label fs-5">Despesas:</label>
+                    <label class="control-label fs-5">Data de Ocorrência:</label>
+                    <input class="form-control" value="@Model.DataOcorrencia.ToString("dd/MM/yyyy")" readonly disabled />
+                </div>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label class="control-label fs-5">Valor:</label>
+                    <input class="form-control" value="R$ @Model.Valor" readonly disabled />
+                </div>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label class="control-label fs-5">Forma de Pagamento:</label>
+                    <input class="form-control" value="@Model.FormaPagamento" readonly disabled />
+                </div>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label class="control-label fs-5">Categorias:</label>
                     <div class="form-control" style="height:auto; min-height:38px;" readonly disabled>
-                        @if (Model.NomesDespesas.Any())
+                        @if (Model.Categorias.Any())
                         {
                             <ul class="mb-0">
-                                @foreach (var nome in Model.NomesDespesas)
+                                @foreach (var categoria in Model.Categorias)
                                 {
-                                    <li>@nome</li>
+                                    <li>@categoria.Titulo</li>
                                 }
                             </ul>
                         }
                         else
                         {
-                            <em>Nenhuma despesa vinculada</em>
+                            <em>Nenhuma categoria vinculada</em>
                         }
                     </div>
                 </div>
+
                 <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
-                    <a href="/categorias">Voltar para a listagem</a>
+                    <a href="/despesas">Voltar para a listagem</a>
                 </div>
             </div>
         </div>
