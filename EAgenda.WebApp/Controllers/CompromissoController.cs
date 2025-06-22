@@ -56,11 +56,22 @@ namespace EAgenda.WebApp.Controllers
 
             List<Contato> contatosSelecionados = new();
 
-            if (cadastrarVm.ContatoId != Guid.Empty)
+            if (cadastrarVm.ContatoId != null)
             {
-                var contatoSelecionado = contatos.SelecionarRegistroPorId(cadastrarVm.ContatoId);
+                var contatoSelecionado = contatos.SelecionarRegistroPorId(cadastrarVm.ContatoId.Value);
                 if (contatoSelecionado != null)
                     contatosSelecionados.Add(contatoSelecionado);
+            }
+
+            string linkLocal;
+
+            if (cadastrarVm.TipoDeCompromisso == "Remoto")
+            {
+                linkLocal = cadastrarVm.Link;
+            }
+            else
+            {
+                linkLocal = cadastrarVm.Link;
             }
 
             var entidade = new Compromisso(
@@ -70,8 +81,8 @@ namespace EAgenda.WebApp.Controllers
                 cadastrarVm.HoraDeInicio,
                 cadastrarVm.HoraDeTermino,
                 cadastrarVm.TipoDeCompromisso,
-                cadastrarVm.Local,   // Local opcional
-                cadastrarVm.Link,    // Link opcional
+                linkLocal,   // Local opcional
+                linkLocal,    // Link opcional
                 contatosSelecionados // Contato opcional
             );
 
@@ -121,7 +132,7 @@ namespace EAgenda.WebApp.Controllers
 
             if (editarVM.ContatoId != Guid.Empty)
             {
-                var contatoSelecionado = contatos.SelecionarRegistroPorId(editarVM.ContatoId);
+                var contatoSelecionado = contatos.SelecionarRegistroPorId(editarVM.ContatoId.Value);
                 if (contatoSelecionado != null)
                     contatosSelecionados.Add(contatoSelecionado);
             }

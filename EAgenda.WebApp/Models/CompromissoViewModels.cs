@@ -27,10 +27,10 @@ namespace EAgenda.WebApp.Models
         [Required(ErrorMessage = "O campo \"Tipo de compromisso\" é obrigatório.")]
         public string TipoDeCompromisso { get; set; }
 
-        public string Local { get; set; }
+        public string? Local { get; set; }
         public string Link { get; set; }
 
-        public Guid ContatoId { get; set; }
+        public Guid? ContatoId { get; set; }
 
         public List<Contato> Contatos { get; set; } = new List<Contato>();
     }
