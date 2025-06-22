@@ -10,34 +10,70 @@
     <div class="col-md-8">
         <div class="card rounded-4 border-0">
             <div class="card-body p-md-5">
-                <form action="/compromissos/cadastrar" method="post">
+                <form asp-action="Cadastrar" method="post">
                     <h3>Formulário de Cadastro</h3>
 
                     <div class="form-group d-grid gap-2 mt-5">
                         <label asp-for="Assunto" class="control-label fs-5">Assunto:</label>
-                        <input asp-for="Assunto" class="form-control"/>
+                        <input asp-for="Assunto" class="form-control" />
                         <span asp-validation-for="Assunto" class="text-danger"></span>
                     </div>
+
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="DataDeOcorrencia" class="control-label fs-5">Data de ocorrência:</label>
-                        <input asp-for="DataDeOcorrencia" type="date" class="form-control"/>
+                        <input asp-for="DataDeOcorrencia" type="date" class="form-control" />
+                        <span asp-validation-for="DataDeOcorrencia" class="text-danger"></span>
                     </div>
+
                     <div class="form-group d-grid gap-2 mt-3">
-                        <label asp-for="HoraDeInicio" class="control-label fs-5">Hora de ínicio:</label>
-                        <input asp-for="HoraDeInicio" type="time" class="form-control"/>
+                        <label asp-for="HoraDeInicio" class="control-label fs-5">Hora de início:</label>
+                        <input asp-for="HoraDeInicio" type="time" class="form-control" />
+                        <span asp-validation-for="HoraDeInicio" class="text-danger"></span>
                     </div>
+
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="HoraDeTermino" class="control-label fs-5">Hora de término:</label>
-                        <input asp-for="HoraDeTermino" type="time" class="form-control"/>
+                        <input asp-for="HoraDeTermino" type="time" class="form-control" />
+                        <span asp-validation-for="HoraDeTermino" class="text-danger"></span>
                     </div>
+
                     <div class="form-group d-grid gap-2 mt-3">
-                        <label asp-for="TipoDeOcorrido" class="control-label fs-5">Tipo de ocorrido:</label>
-                        <input asp-for="TipoDeOcorrido" class="form-control"/>
-                    </div>                   
+                        <label asp-for="TipoDeCompromisso" class="control-label fs-5">Tipo de ocorrido:</label>
+                        <select asp-for="TipoDeCompromisso" class="form-control">
+                            <option value="">Selecione o tipo</option>
+                            <option value="Remoto">Remoto</option>
+                            <option value="Presencial">Presencial</option>
+                        </select>
+                        <span asp-validation-for="TipoDeCompromisso" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="Link" class="control-label fs-5">Link compromisso remoto:</label>
+                        <input asp-for="Link" class="form-control" />
+                        <span asp-validation-for="Link" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="Local" class="control-label fs-5">Local compromisso presencial:</label>
+                        <input asp-for="Local" class="form-control" />
+                        <span asp-validation-for="Local" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group d-grid gap-2 mt-3">
+                        <label asp-for="ContatoId" class="control-label fs-5">Contato cadastrado:</label>
+                        <select asp-for="ContatoId" class="form-control">
+                            <option value="">Selecione um contato</option>
+                            @foreach (var contato in Model.Contatos)
+                            {
+                                <option value="@contato.Id">@contato.Nome</option>
+                            }
+                        </select>
+                        <span asp-validation-for="ContatoId" class="text-danger"></span>
+                    </div>
+
                     <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
                         <a href="/compromissos">Voltar para a listagem</a>
                         <button type="submit" class="btn btn-primary rounded-4 px-5">Confirmar</button>
-
                     </div>
                 </form>
             </div>

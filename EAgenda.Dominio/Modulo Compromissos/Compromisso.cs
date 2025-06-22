@@ -1,11 +1,7 @@
 ﻿using EAgenda.Dominio.Compartilhado;
+using EAgenda.Dominio.ModuloContato;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EAgenda.Dominio.Modulo_Compromissos
 {
@@ -15,15 +11,50 @@ namespace EAgenda.Dominio.Modulo_Compromissos
         public DateOnly DataDeOcorrencia { get; set; }
         public TimeSpan HoraDeInicio { get; set; }
         public TimeSpan HoraDeTermino { get; set; }
-        public string TipoDeOcorrido { get; set; }
+        public string TipoDeCompromisso { get; set; }
+        public string Local { get; set; }
+        public string Link { get; set; }
 
-        public Compromisso(string assunto,DateOnly dataDeOcorrencia, TimeSpan horaDeInicio, TimeSpan horaDeTermino, string tipoDeOcorrido)
+        public List<Contato> Contatos { get; set; } = new List<Contato>();
+
+        // Construtor padrão para casos que precisem inicializar sem parâmetros
+        public Compromisso() { }
+
+        // Construtor sem Id (usado normalmente)
+        public Compromisso(
+            string assunto,
+            DateOnly dataDeOcorrencia,
+            TimeSpan horaDeInicio,
+            TimeSpan horaDeTermino,
+            string tipoDeCompromisso,
+            string local,
+            string link,
+            List<Contato> contatos)
         {
             Assunto = assunto;
             DataDeOcorrencia = dataDeOcorrencia;
             HoraDeInicio = horaDeInicio;
             HoraDeTermino = horaDeTermino;
-            TipoDeOcorrido = tipoDeOcorrido;
+            TipoDeCompromisso = tipoDeCompromisso;
+            Local = local;
+            Link = link;
+            Contatos = contatos ?? new List<Contato>();
+        }
+
+        // Construtor com Id, para criar entidade com Id já definido (exemplo: edição)
+        public Compromisso(
+            Guid id,
+            string assunto,
+            DateOnly dataDeOcorrencia,
+            TimeSpan horaDeInicio,
+            TimeSpan horaDeTermino,
+            string tipoDeCompromisso,
+            string local,
+            string link,
+            List<Contato> contatos)
+            : this(assunto, dataDeOcorrencia, horaDeInicio, horaDeTermino, tipoDeCompromisso, local, link, contatos)
+        {
+            Id = id;
         }
 
         public override void AtualizarRegistro(Compromisso registroEditado)
@@ -32,8 +63,10 @@ namespace EAgenda.Dominio.Modulo_Compromissos
             DataDeOcorrencia = registroEditado.DataDeOcorrencia;
             HoraDeInicio = registroEditado.HoraDeInicio;
             HoraDeTermino = registroEditado.HoraDeTermino;
-            TipoDeOcorrido = registroEditado.TipoDeOcorrido;
-                
+            TipoDeCompromisso = registroEditado.TipoDeCompromisso;
+            Local = registroEditado.Local;
+            Link = registroEditado.Link;
+            Contatos = registroEditado.Contatos ?? new List<Contato>();
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using EAgenda.Dominio.Compartilhado;
 using EAgenda.Dominio.Modulo_Compromissos;
+using EAgenda.Dominio.ModuloContato;
 using EAgenda.Infraestrutura.Arquivos.Compartilhado;
 using EAgenda.Infraestrutura.Arquivos.ModuloCompromisso;
+using EAgenda.Infraestrutura.Arquivos.ModuloContato;
 using EAgenda.WebApp.Extensions;
 using EAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using static EAgenda.WebApp.Models.DetalhesCompromissoViewModel;
+using System;
+using System.Collections.Generic;
 
 namespace EAgenda.WebApp.Controllers;
 
@@ -14,76 +17,132 @@ public class CompromissoController : Controller
 {
     private readonly IrepositorioCompromisso repositorio;
     private readonly ContextoDados contextodados;
+    private readonly IRepositorioContato contatos;
+
     public CompromissoController()
     {
         contextodados = new ContextoDados(true);
         repositorio = new RepositorioCompromisso(contextodados);
+        contatos = new RepositorioContatoEmArquivo(contextodados);
     }
 
     public IActionResult Index()
     {
-        var registroSelecionado = repositorio.SelecionarRegistros();
-        var visualizarVM = new VisualizarCompromissoViewModel(registroSelecionado);
+        var registros = repositorio.SelecionarRegistros();
+        var visualizarVM = new VisualizarCompromissoViewModel(registros);
 
         return View(visualizarVM);
     }
+
     [HttpGet("cadastrar")]
     public IActionResult Cadastrar()
     {
         var cadastrarVM = new CadastrarCompromissoViewModel();
+        cadastrarVM.Contatos = contatos.SelecionarRegistros();  
 
         return View(cadastrarVM);
     }
 
     [HttpPost("cadastrar")]
-
     public IActionResult Cadastrar(CadastrarCompromissoViewModel cadastrarVm)
     {
-        var entidade = cadastrarVm.ParaEntidade();
+        if (!ModelState.IsValid)
+        {
+            cadastrarVm.Contatos = contatos.SelecionarRegistros();
+            return View(cadastrarVm);
+        }
+
+        List<Contato> contatosSelecionados = new();
+
+        if (cadastrarVm.ContatoId != Guid.Empty)
+        {
+            var contatoSelecionado = contatos.SelecionarRegistroPorId(cadastrarVm.ContatoId);
+            if (contatoSelecionado != null)
+                contatosSelecionados.Add(contatoSelecionado);
+        }
+
+        var entidade = new Compromisso(
+            Guid.NewGuid(),
+            cadastrarVm.Assunto,
+            cadastrarVm.DataDeOcorrencia,
+            cadastrarVm.HoraDeInicio,
+            cadastrarVm.HoraDeTermino,
+            cadastrarVm.TipoDeCompromisso,
+            cadastrarVm.Local,
+            cadastrarVm.Link,
+            contatosSelecionados
+        );
+
         repositorio.CadastrarRegistro(entidade);
 
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpGet("editar/{Id:guid}")]
-
+    [HttpGet("editar/{id:guid}")]
     public IActionResult Editar(Guid id)
     {
         var registroSelecionado = repositorio.SelecionarRegistroPorId(id);
 
-        var editarVM = new EditarCompromissoViewModel(registroSelecionado.Id, registroSelecionado.Assunto, registroSelecionado.DataDeOcorrencia, registroSelecionado.HoraDeInicio, registroSelecionado.HoraDeTermino, registroSelecionado.TipoDeOcorrido);
+        Guid contatoId = Guid.Empty;
+        if (registroSelecionado.Contatos != null && registroSelecionado.Contatos.Count > 0)
+            contatoId = registroSelecionado.Contatos[0].Id;
+
+        var editarVM = new EditarCompromissoViewModel(
+            registroSelecionado.Id,
+            registroSelecionado.Assunto,
+            registroSelecionado.DataDeOcorrencia,
+            registroSelecionado.HoraDeInicio,
+            registroSelecionado.HoraDeTermino,
+            registroSelecionado.TipoDeCompromisso,
+            registroSelecionado.Local,
+            registroSelecionado.Link,
+            contatoId,
+            contatos.SelecionarRegistros()
+        );
 
         return View(editarVM);
     }
-    [HttpPost("editar/{Id:guid}")]
 
+    [HttpPost("editar/{id:guid}")]
     public IActionResult Editar(Guid id, EditarCompromissoViewModel editarVM)
     {
+        if (!ModelState.IsValid)
+        {
+            editarVM.Contatos = contatos.SelecionarRegistros();
+            return View(editarVM);
+        }
+
+        List<Contato> contatosSelecionados = new();
+
+        if (editarVM.ContatoId != Guid.Empty)
+        {
+            var contatoSelecionado = contatos.SelecionarRegistroPorId(editarVM.ContatoId);
+            if (contatoSelecionado != null)
+                contatosSelecionados.Add(contatoSelecionado);
+        }
+
         var entidade = editarVM.ParaEntidade();
+        entidade.Contatos = contatosSelecionados;
 
         repositorio.EditarRegistro(id, entidade);
 
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpGet("excluir/{Id:guid}")]
-
+    [HttpGet("excluir/{id:guid}")]
     public IActionResult Excluir(Guid id)
     {
-        var registroselecionado = repositorio.SelecionarRegistroPorId(id);
-
-        var excluirVm = new ExcluirCompromissoViewModel(registroselecionado.Id, registroselecionado.Assunto);
+        var registroSelecionado = repositorio.SelecionarRegistroPorId(id);
+        var excluirVm = new ExcluirCompromissoViewModel(registroSelecionado.Id, registroSelecionado.Assunto);
 
         return View(excluirVm);
     }
 
-    [HttpPost("excluir/{Id:guid}")]
-
-    public IActionResult ExcluirConfirmado(Guid Id,ExcluirCompromissoViewModel excluirVM)
+    [HttpPost("excluir/{id:guid}")]
+    public IActionResult ExcluirConfirmado(Guid id, ExcluirCompromissoViewModel excluirVM)
     {
-        repositorio.ExcluirRegistro(Id);
+        repositorio.ExcluirRegistro(id);
 
         return RedirectToAction(nameof(Index));
     }
 }
-

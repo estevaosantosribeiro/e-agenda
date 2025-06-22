@@ -1,89 +1,140 @@
-﻿using EAgenda.Dominio.Compartilhado;
-using EAgenda.Dominio.ModuloContato;
+﻿using EAgenda.Dominio.ModuloContato;
+using EAgenda.Dominio.Modulo_Compromissos;
 using EAgenda.Infraestrutura.Arquivos.Compartilhado;
 using EAgenda.Infraestrutura.Arquivos.ModuloContato;
-using EAgenda.WebApp.Extensions;
+using EAgenda.Infraestrutura.Arquivos.ModuloCompromisso;
 using EAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
-
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EAgenda.WebApp.Controllers
 {
     [Route("contatos")]
     public class ContatoController : Controller
     {
-        private readonly ContextoDados contextoDados;
         private readonly IRepositorioContato repositorioContato;
+        private readonly IrepositorioCompromisso repositorioCompromisso;
+        private readonly ContextoDados contextoDados;
+
         public ContatoController()
         {
             contextoDados = new ContextoDados(true);
             repositorioContato = new RepositorioContatoEmArquivo(contextoDados);
+            repositorioCompromisso = new RepositorioCompromisso(contextoDados);
         }
-       
+
         public IActionResult Index()
         {
-
-            var registros = repositorioContato.SelecionarRegistros();
-
-            var visualizarVm = new VisualizarContatosViewModel(registros);
-
-
-            return View(visualizarVm);
+            var contatos = repositorioContato.SelecionarRegistros();
+            var vm = new VisualizarContatosViewModel(contatos);
+            return View(vm);
         }
-        [HttpGet("cadastrar")]
 
+        [HttpGet("cadastrar")]
         public IActionResult Cadastrar()
         {
-            var CadastrarVm = new CadastrarContatoViewModel();
-
-            return View(CadastrarVm);
+            return View(new CadastrarContatoViewModel());
         }
-        [HttpPost("cadastrar")]
-        public IActionResult Cadastrar(CadastrarContatoViewModel ContatoVm)
-        {
-            var entidade = ContatoVm.ParaEntidade();
 
-            repositorioContato.CadastrarRegistro(entidade);
+        [HttpPost("cadastrar")]
+        public IActionResult Cadastrar(CadastrarContatoViewModel vm)
+        {
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            // Verifica duplicidade de email ou telefone
+            var contatosExistentes = repositorioContato.SelecionarRegistros();
+
+            if (contatosExistentes.Any(c => c.Email.Equals(vm.Email, StringComparison.OrdinalIgnoreCase)))
+            {
+                ModelState.AddModelError("Email", "Já existe um contato cadastrado com esse email.");
+                return View(vm);
+            }
+
+            if (contatosExistentes.Any(c => c.Telefone == vm.Telefone))
+            {
+                ModelState.AddModelError("Telefone", "Já existe um contato cadastrado com esse telefone.");
+                return View(vm);
+            }
+
+            repositorioContato.CadastrarRegistro(vm.ParaEntidade());
 
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet("editar/{Id:guid}")]
 
+        [HttpGet("editar/{id:guid}")]
         public IActionResult Editar(Guid id)
         {
-           var registroSelecionado = repositorioContato.SelecionarRegistroPorId(id);
+            var contato = repositorioContato.SelecionarRegistroPorId(id);
 
-           var editarVm = new EditarContatoViewModel(id,registroSelecionado.Nome,registroSelecionado.Email,registroSelecionado.Telefone,registroSelecionado.Cargo,registroSelecionado.Empresa);
+            if (contato == null)
+                return NotFound();
 
-            return View(editarVm);
+            var vm = new EditarContatoViewModel(contato.Id, contato.Nome, contato.Email, contato.Telefone, contato.Cargo, contato.Empresa);
+
+            return View(vm);
         }
 
-        [HttpPost("editar/{Id:guid}")]
-        public IActionResult Editar(Guid id, EditarContatoViewModel editarVm)
+        [HttpPost("editar/{id:guid}")]
+        public IActionResult Editar(Guid id, EditarContatoViewModel vm)
         {
-            var entidade = editarVm.ParaEntidade();
+            if (!ModelState.IsValid)
+                return View(vm);
 
-            repositorioContato.EditarRegistro(id, entidade);
+            var contatosExistentes = repositorioContato.SelecionarRegistros().Where(c => c.Id != id);
+
+            if (contatosExistentes.Any(c => c.Email.Equals(vm.Email, StringComparison.OrdinalIgnoreCase)))
+            {
+                ModelState.AddModelError("Email", "Já existe um contato cadastrado com esse email.");
+                return View(vm);
+            }
+
+            if (contatosExistentes.Any(c => c.Telefone == vm.Telefone))
+            {
+                ModelState.AddModelError("Telefone", "Já existe um contato cadastrado com esse telefone.");
+                return View(vm);
+            }
+
+            repositorioContato.EditarRegistro(id, vm.ParaEntidade());
 
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet("excluir/{Id:guid}")]
-
-        public IActionResult Excluir(Guid Id)
+        [HttpGet("excluir/{id:guid}")]
+        public IActionResult Excluir(Guid id)
         {
-            var registroSelecionado = repositorioContato.SelecionarRegistroPorId(Id);
+            var contato = repositorioContato.SelecionarRegistroPorId(id);
 
-            var excluirVM = new ExcluirContatoViewModel(registroSelecionado.Id,registroSelecionado.Nome);
+            if (contato == null)
+                return NotFound();
 
-            return View(excluirVM);
+            // Verifica se contato tem compromissos vinculados
+            var compromissosDoContato = repositorioCompromisso.SelecionarRegistros()
+                .Where(c => c.Contatos.Any(ct => ct.Id == id)).ToList();
+
+            var vm = new ExcluirContatoViewModel(contato.Id, contato.Nome)
+            {
+                TemCompromissos = compromissosDoContato.Any()
+            };
+
+            return View(vm);
         }
 
-        [HttpPost("excluir/{Id:guid}")]
-        public IActionResult ExcluirConfirmado(Guid Id, ExcluirContatoViewModel excluirVM)
+        [HttpPost("excluir/{id:guid}")]
+        public IActionResult ExcluirConfirmado(Guid id, ExcluirContatoViewModel vm)
         {
-            repositorioContato.ExcluirRegistro(Id);
+            var compromissosDoContato = repositorioCompromisso.SelecionarRegistros()
+                .Where(c => c.Contatos.Any(ct => ct.Id == id)).ToList();
+
+            if (compromissosDoContato.Any())
+            {
+                TempData["ErroExclusao"] = "Não é possível excluir o contato porque ele possui compromissos vinculados.";
+                return RedirectToAction(nameof(Excluir), new { id });
+            }
+
+            repositorioContato.ExcluirRegistro(id);
 
             return RedirectToAction(nameof(Index));
         }
