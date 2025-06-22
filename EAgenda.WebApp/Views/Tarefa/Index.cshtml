@@ -6,28 +6,28 @@
 }
 
 <div class="d-grid d-lg-flex flex-wrap gap-2 align-items-center">
-    <a class="btn btn-primary px-4" href="/tarefas/cadastrar">
+    <a class="btn-amber px-4" href="/tarefas/cadastrar">
         <i class="bi bi-plus"></i>
         Cadastrar Novo/a
     </a>
 
     <div class="ms-lg-auto d-grid d-lg-flex flex-wrap gap-2">
-        <a class="btn btn-outline-primary px-3 btn-filtro" asp-action="Index">
+        <a class="btn-amber-outline px-3 btn-filtro" asp-action="Index">
             <i class="bi bi-list"></i>
             Todas as tarefas
         </a>
 
-        <a class="btn btn-outline-primary px-3 btn-filtro" asp-action="Index" asp-route-status="pendentes">
+        <a class="btn-amber-outline px-3 btn-filtro" asp-action="Index" asp-route-status="pendentes">
             <i class="bi bi-cart"></i>
             Tarefas pendentes
         </a>
 
-        <a class="btn btn-outline-primary px-3 btn-filtro" asp-action="Index" asp-route-status="concluidas">
+        <a class="btn-amber-outline px-3 btn-filtro" asp-action="Index" asp-route-status="concluidas">
             <i class="bi bi-cart-check"></i>
             Tarefas concluidas
         </a>
 
-        <a class="btn btn-outline-primary px-3 btn-filtro" asp-action="Index" asp-route-status="prioridades">
+        <a class="btn-amber-outline px-3 btn-filtro" asp-action="Index" asp-route-status="prioridades">
             <i class="bi bi-cash-stack"></i>
             Tarefas por prioridade
         </a>
@@ -51,10 +51,10 @@
                         <a href="/tarefas/detalhes/@item.Id" class="btn btn-secondary">
                             <i class="bi bi-clipboard-data-fill"></i>
                         </a>
-                        <a href="/tarefas/editar/@item.Id" class="btn btn-primary">
+                        <a href="/tarefas/editar/@item.Id" class="btn-edit">
                             <i class="bi bi-pencil-square"></i>
                         </a>
-                        <a href="/tarefas/excluir/@item.Id" class="btn btn-danger">
+                        <a href="/tarefas/excluir/@item.Id" class="btn-delete">
                             <i class="bi bi-trash"></i>
                         </a>
                     </span>

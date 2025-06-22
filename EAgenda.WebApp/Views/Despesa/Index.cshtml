@@ -6,7 +6,7 @@
 }
 
 <p>
-    <a class="btn btn-primary px-4" href="/despesas/cadastrar">
+    <a class="btn-amber px-4" href="/despesas/cadastrar">
         <i class="bi bi-plus"></i>
         Cadastrar Novo/a
     </a>
@@ -24,13 +24,13 @@
                     <p class="card-text"><span class="fw-semibold">Valor:</span> @item.Valor.ToString("C2")</p>
 
                     <span class="d-flex gap-1 justify-content-end mt-4">
-                        <a href="/despesas/detalhes/@item.Id" class="btn btn-secondary rounded-circle opcao-card">
+                        <a href="/despesas/detalhes/@item.Id" class="btn btn-secondary opcao-card">
                             <i class="bi bi-search"></i>
                         </a>
-                        <a href="/despesas/editar/@item.Id" class="btn btn-primary rounded-circle opcao-card">
+                        <a href="/despesas/editar/@item.Id" class="btn-edit opcao-card">
                             <i class="bi bi-pencil-square"></i>
                         </a>
-                        <a href="/despesas/excluir/@item.Id" class="btn btn-danger rounded-circle opcao-card">
+                        <a href="/despesas/excluir/@item.Id" class="btn-delete opcao-card">
                             <i class="bi bi-trash"></i>
                         </a>
                     </span>
