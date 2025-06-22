@@ -21,8 +21,8 @@ namespace EAgenda.WebApp.Models
         [RegularExpression(@"\(\d{2}\) \d{4,5}-\d{4}", ErrorMessage = "O telefone deve estar no formato (XX) XXXX-XXXX ou (XX) XXXXX-XXXX.")]
         public string Telefone { get; set; }
 
-        public string Cargo { get; set; }
-        public string Empresa { get; set; }
+        public string? Cargo { get; set; }
+        public string? Empresa { get; set; }
     }
 
     public class VisualizarContatosViewModel
