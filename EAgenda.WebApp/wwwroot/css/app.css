@@ -3,7 +3,7 @@
 }
 
 .nav-link-default {
-    color: #5c4033; /* Marrom sóbrio */
+    color: #5c4033;
     background-color: transparent;
     padding: 6px 12px;
     border-radius: 6px;
@@ -12,29 +12,23 @@
     text-decoration: none;
 }
 
-.nav-link-default:hover {
-    /*background-color: #4e362b;*/ /* Marrom escuro (hover) */
-    /*color: #fffaf3;*/ /* Texto claro no hover */
-}
-
 .nav-link-ativo {
-    background-color: #5c4033; /* Fundo marrom ativo */
-    color: #fffaf3; /* Texto claro */
+    background-color: #5c4033;
+    color: #fffaf3;
     border-radius: 6px;
     padding: 6px 12px;
     font-weight: 600;
     text-decoration: none;
 }
 
-/* Corrige o hover do Bootstrap que afeta nav-link-ativo */
 .nav-link.nav-link-ativo:hover {
-    color: #fffaf3 !important; /* Mantém o texto claro no hover */
-    background-color: #4e362b; /* Apenas escurece um pouco o fundo */
+    color: #fffaf3 !important;
+    background-color: #4e362b;
 }
 
 .btn-amber {
-    background-color: #5c4033; /* Marrom sóbrio */
-    color: #fffaf3; /* Off-white suave */
+    background-color: #5c4033;
+    color: #fffaf3;
     border: none;
     padding: 8px 16px;
     border-radius: 6px;
@@ -47,24 +41,24 @@
 }
 
 .btn-amber:hover {
-    background-color: #4e362b;  Marrom mais escuro no hover 
+    background-color: #4e362b;
     transform: scale(1.02);
 }
 
 .btn-amber:active {
-    background-color: #3e2c23; /* Tom pressionado */
+    background-color: #3e2c23;
     transform: scale(0.98);
 }
 
 .btn-amber:disabled {
-    background-color: #d3c1b8; /* Bege café com leite apagado */
+    background-color: #d3c1b8;
     color: #a1887f;
     cursor: not-allowed;
 }
 
 .btn-edit {
-    background-color: #7C9A6Dc0; /* Verde neon */
-    color: #000000; /* Preto para contraste */
+    background-color: #7C9A6Dc0;
+    color: #000000;
     border: none;
     padding: 6px 12px;
     border-radius: 6px;
@@ -72,17 +66,15 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    /*    box-shadow: 0 0 8px #39ff14;*/
 }
 
     .btn-edit:hover {
         background-color: #7C9A6Db0;
-        /*        box-shadow: 0 0 12px #2fff12;*/
     }
 
 .btn-delete {
-    background-color: #8B4B57; /* Pink 800 */
-    color: #fffaf3; /* Off-white para contraste */
+    background-color: #8B4B57;
+    color: #fffaf3;
     border: none;
     padding: 6px 12px;
     border-radius: 6px;
@@ -90,17 +82,15 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    /*    box-shadow: 0 0 8px #ad1457;*/
 }
 
     .btn-delete:hover {
         background-color: #8B4B57f0;
-        /*        box-shadow: 0 0 12px #9b124d;*/
     }
 
 .btn-amber-outline {
     background-color: transparent;
-    color: #b3541e; /* Laranja queimado / âmbar */
+    color: #b3541e;
     border: 2px solid #b3541e;
     padding: 6px 12px;
     border-radius: 6px;
@@ -114,7 +104,6 @@
     .btn-amber-outline:hover {
         background-color: #b3541e;
         color: #fffaf3;
-/*        transform: scale(1.03);*/
     }
 
 .text-coffee {
