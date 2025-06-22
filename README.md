@@ -1,6 +1,6 @@
 # Projeto Web E-Agenda
 
-![](  )
+![]( https://i.imgur.com/jnmwLpB.gif )
 ## Projeto
 
 Desenvolvido durante o curso Fullstack da [Academia do Programador](https://www.academiadoprogramador.net) 2025
