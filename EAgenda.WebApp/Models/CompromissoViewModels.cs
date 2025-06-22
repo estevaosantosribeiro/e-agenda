@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using EAgenda.WebApp.Extensions;
+using EAgenda.WebApp.Models;
 
 namespace EAgenda.WebApp.Models
 {
@@ -27,27 +28,11 @@ namespace EAgenda.WebApp.Models
         public string TipoDeCompromisso { get; set; }
 
         public string Local { get; set; }
-
-        [CustomValidation(typeof(FormularioCompromissoViewModel), nameof(ValidarLink))]
         public string Link { get; set; }
 
         public Guid ContatoId { get; set; }
 
         public List<Contato> Contatos { get; set; } = new List<Contato>();
-
-        public static ValidationResult ValidarLink(string link, ValidationContext context)
-        {
-            var instance = context.ObjectInstance as FormularioCompromissoViewModel;
-            if (instance == null)
-                return ValidationResult.Success;
-
-            bool isRemoto = string.Equals(instance.Local, "Remoto", StringComparison.OrdinalIgnoreCase);
-
-            if (isRemoto && string.IsNullOrWhiteSpace(link))
-                return new ValidationResult("O campo \"Link\" é obrigatório para compromissos remotos.");
-
-            return ValidationResult.Success;
-        }
     }
 
     public class CadastrarCompromissoViewModel : FormularioCompromissoViewModel
