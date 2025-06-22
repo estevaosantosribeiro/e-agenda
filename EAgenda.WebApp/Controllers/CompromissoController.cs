@@ -130,7 +130,7 @@ namespace EAgenda.WebApp.Controllers
 
             List<Contato> contatosSelecionados = new();
 
-            if (editarVM.ContatoId != Guid.Empty)
+            if (editarVM.ContatoId != null)
             {
                 var contatoSelecionado = contatos.SelecionarRegistroPorId(editarVM.ContatoId.Value);
                 if (contatoSelecionado != null)
