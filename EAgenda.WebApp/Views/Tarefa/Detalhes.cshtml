@@ -118,7 +118,7 @@
                 }
 
                 <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
-                    <a href="/tarefas">Voltar para a listagem</a>
+                    <a href="/tarefas" class="text-coffee">Voltar para a listagem</a>
                     @if (!temItens || Model.PercentualConcluido == 100)
                     {
                         var rota = Model.EstaConcluida ? "desconcluir-tarefa" : "concluir-tarefa";

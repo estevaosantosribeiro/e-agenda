@@ -6,11 +6,11 @@
         const atributoHref = link.getAttribute('href').toLowerCase();
 
         if (enderecoAtual === atributoHref || enderecoAtual.startsWith(atributoHref + "/")) {
-            link.classList.remove('nav-link', 'text-primary');
-            link.classList.add('btn', 'btn-primary', 'rounded-3');
+            link.classList.remove('nav-link-default');
+            link.classList.add('nav-link-ativo');
         } else {
-            link.classList.remove('btn', 'btn-primary', 'rounded-3');
-            link.classList.add('nav-link', 'text-primary');
+            link.classList.remove('nav-link-ativo');
+            link.classList.add('nav-link-default');
         }
     }
 });
