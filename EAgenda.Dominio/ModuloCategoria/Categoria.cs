@@ -31,7 +31,6 @@ public class Categoria : EntidadeBase<Categoria>
             Despesas.Add(despesa);
     }
 
-
     public void RemoverDespesa(Despesa despesa)
     {
         if (Despesas == null)
@@ -39,5 +38,4 @@ public class Categoria : EntidadeBase<Categoria>
 
         Despesas.RemoveAll(d => d.Id == despesa.Id);
     }
-
 }

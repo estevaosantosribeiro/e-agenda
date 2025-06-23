@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using System.Text.Json;
-using System.Security.Cryptography.X509Certificates;
 using EAgenda.Dominio.ModuloContato;
 using EAgenda.Dominio.ModuloTarefa;
 using EAgenda.Dominio.ModuloCategoria;
@@ -17,7 +16,6 @@ public class ContextoDados
     private string pastaPrincipal = "EAgenda";
 
     public List<Tarefa> Tarefas { get; set; }
-
     public List<Contato> Contatos { get; set; }
     public List<Compromisso> Compromissos { get; set; }
     public List<Categoria> Categorias { get; set; }
@@ -82,13 +80,9 @@ public class ContextoDados
         if (contextoArmazenado == null) return;
 
         Tarefas = contextoArmazenado.Tarefas;
-
         Contatos = contextoArmazenado.Contatos;
-
         Categorias = contextoArmazenado.Categorias;
-
         Despesas = contextoArmazenado.Despesas;
-
         Compromissos = contextoArmazenado.Compromissos;
     }
 }

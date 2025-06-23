@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EAgenda.Dominio.ModuloCategoria;
-using EAgenda.Dominio.ModuloDespesa;
 using EAgenda.WebApp.Extensions;
 
 namespace EAgenda.WebApp.Models;

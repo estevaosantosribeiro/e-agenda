@@ -29,8 +29,6 @@ public class FormularioDespesaViewModel
     public List<Categoria> CategoriasDisponiveis { get; set; }
 }
 
-
-
 public class CadastrarDespesaViewModel : FormularioDespesaViewModel
 {
     public CadastrarDespesaViewModel() { }
