@@ -1,8 +1,6 @@
 ﻿using EAgenda.Dominio.ModuloCategoria;
 using EAgenda.Dominio.ModuloDespesa;
 using EAgenda.Infraestrutura.Arquivos.Compartilhado;
-using EAgenda.Infraestrutura.Arquivos.ModuloCategoria;
-using EAgenda.Infraestrutura.Arquivos.ModuloDespesa;
 using EAgenda.WebApp.Extensions;
 using EAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +14,14 @@ public class DespesaController : Controller
     private readonly IRepositorioDespesa repositorioDespesa;
     private readonly IRepositorioCategoria repositorioCategoria;
 
-    public DespesaController()
+    public DespesaController(
+        ContextoDados contexto, 
+        IRepositorioDespesa repositorioDespesa, 
+        IRepositorioCategoria repositorioCategoria)
     {
-        contextoDados = new ContextoDados(true);
-        repositorioDespesa = new RepositorioDespesaEmArquivo(contextoDados);
-        repositorioCategoria = new RepositorioCategoriaEmArquivo(contextoDados);
+        contextoDados = contexto;
+        this.repositorioDespesa = repositorioDespesa;
+        this.repositorioCategoria = repositorioCategoria;
     }
 
     public IActionResult Index()

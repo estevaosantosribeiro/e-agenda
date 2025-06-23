@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace EAgenda.Dominio.Modulo_Compromissos
 {
-   public interface IrepositorioCompromisso : IRepositorio<Compromisso>;
+   public interface IRepositorioCompromisso : IRepositorio<Compromisso>;
   
 }

@@ -1,8 +1,6 @@
 ﻿using EAgenda.Dominio.ModuloCategoria;
 using EAgenda.Dominio.ModuloDespesa;
 using EAgenda.Infraestrutura.Arquivos.Compartilhado;
-using EAgenda.Infraestrutura.Arquivos.ModuloCategoria;
-using EAgenda.Infraestrutura.Arquivos.ModuloDespesa;
 using EAgenda.WebApp.Extensions;
 using EAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +14,14 @@ public class CategoriaController : Controller
     private readonly IRepositorioCategoria repositorioCategoria;
     private readonly IRepositorioDespesa repositorioDespesa;
 
-    public CategoriaController()
+    public CategoriaController(
+        ContextoDados contexto, 
+        IRepositorioCategoria repositorioCategoria, 
+        IRepositorioDespesa repositorioDespesa)
     {
-        contextoDados = new ContextoDados(true);
-        repositorioCategoria = new RepositorioCategoriaEmArquivo(contextoDados);
-        repositorioDespesa = new RepositorioDespesaEmArquivo(contextoDados);
+        contextoDados = contexto;
+        this.repositorioCategoria = repositorioCategoria;
+        this.repositorioDespesa = repositorioDespesa;
     }
 
     public IActionResult Index()

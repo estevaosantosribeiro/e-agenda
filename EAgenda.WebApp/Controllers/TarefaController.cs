@@ -1,6 +1,5 @@
 ﻿using EAgenda.Dominio.ModuloTarefa;
 using EAgenda.Infraestrutura.Arquivos.Compartilhado;
-using EAgenda.Infraestrutura.Arquivos.ModuloTarefa;
 using EAgenda.WebApp.Extensions;
 using EAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +12,10 @@ public class TarefaController : Controller
     private readonly ContextoDados contexto;
     private readonly IRepositorioTarefa repositorioTarefa;
 
-    public TarefaController()
+    public TarefaController(ContextoDados contexto, IRepositorioTarefa repositorioTarefa)
     {
-        contexto = new ContextoDados(true);
-        repositorioTarefa = new RepositorioTarefaEmArquivo(contexto);
+        this.contexto = contexto;
+        this.repositorioTarefa = repositorioTarefa;
     }
 
     [HttpGet]
