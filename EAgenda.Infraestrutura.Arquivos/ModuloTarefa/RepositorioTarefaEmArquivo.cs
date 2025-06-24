@@ -9,36 +9,17 @@ public class RepositorioTarefaEmArquivo : RepositorioBaseEmArquivo<Tarefa>, IRep
 
     public List<Tarefa> SelecionarTarefasConcluidas()
     {
-        var tarefasConcluidas = new List<Tarefa>();
-
-        foreach (var i in registros)
-            if (i.EstaConcluida) tarefasConcluidas.Add(i);
-
-        return tarefasConcluidas;
+        return registros.FindAll(tarefa => tarefa.EstaConcluida);
     }
 
     public List<Tarefa> SelecionarTarefasPendentes()
     {
-        var tarefasPendentes = new List<Tarefa>();
-        
-        foreach (var i in registros)
-            if (!i.EstaConcluida) tarefasPendentes.Add(i);
-
-        return tarefasPendentes;
+        return registros.FindAll(tarefa => !tarefa.EstaConcluida);
     }
 
     public List<Tarefa> SelecionarTarefasPorPrioridade()
     {
-        var tarefasPorPrioridade = registros;
-
-        tarefasPorPrioridade.Sort(CompararTarefasPorPrioridade);
-
-        return tarefasPorPrioridade;
-    }
-
-    private int CompararTarefasPorPrioridade(Tarefa tarefa1, Tarefa tarefa2)
-    {
-        return tarefa2.Prioridade.CompareTo(tarefa1.Prioridade);
+        return registros.OrderByDescending((x) => x.Prioridade).ToList();
     }
 
     protected override List<Tarefa> ObterRegistros()
