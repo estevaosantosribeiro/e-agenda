@@ -9,6 +9,7 @@ using EAgenda.Infraestrutura.Arquivos.ModuloCompromisso;
 using EAgenda.Infraestrutura.Arquivos.ModuloContato;
 using EAgenda.Infraestrutura.Arquivos.ModuloDespesa;
 using EAgenda.Infraestrutura.Arquivos.ModuloTarefa;
+using EAgenda.WebApp.ActionFilters;
 
 namespace EAgenda.WebApp;
 
@@ -18,7 +19,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddControllersWithViews();
+        builder.Services.AddControllersWithViews(options => 
+        { 
+            options.Filters.Add<ValidarModeloAttribute>();
+        });
 
         builder.Services.AddScoped<ContextoDados>((_) => new ContextoDados(true));
         builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmArquivo>();
