@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b3aa09a8-ac4c-499e-a09d-ac385f34055d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,8 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.18" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EAgenda.Dominio\EAgenda.Dominio.csproj" />
     <ProjectReference Include="..\EAgenda.Infraestrutura.Arquivos\EAgenda.Infraestrutura.Arquivos.csproj" />
+    <ProjectReference Include="..\EAgenda.Infraestrutura.Orm\EAgenda.Infraestrutura.Orm.csproj" />
   </ItemGroup>
 
 </Project>

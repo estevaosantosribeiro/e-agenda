@@ -9,7 +9,10 @@ using EAgenda.Infraestrutura.Arquivos.ModuloCompromisso;
 using EAgenda.Infraestrutura.Arquivos.ModuloContato;
 using EAgenda.Infraestrutura.Arquivos.ModuloDespesa;
 using EAgenda.Infraestrutura.Arquivos.ModuloTarefa;
+using EAgenda.Infraestrutura.Orm.Compartilhado;
 using EAgenda.WebApp.ActionFilters;
+using EAgenda.WebApp.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace EAgenda.WebApp;
 
@@ -27,6 +30,8 @@ public class Program
         builder.Services.AddScoped<IRepositorioContato, RepositorioContatoEmArquivo>();
         builder.Services.AddScoped<IRepositorioDespesa, RepositorioDespesaEmArquivo>();
         builder.Services.AddScoped<IRepositorioTarefa, RepositorioTarefaEmArquivo>();
+
+        builder.Services.AddEntityFrameworkConfig(builder.Configuration);
 
         var app = builder.Build();
 
