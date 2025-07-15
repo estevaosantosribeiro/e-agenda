@@ -19,10 +19,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddControllersWithViews(options => 
-        { 
-            options.Filters.Add<ValidarModeloAttribute>();
-        });
+        builder.Services.AddControllersWithViews();
 
         builder.Services.AddScoped<ContextoDados>((_) => new ContextoDados(true));
         builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmArquivo>();
