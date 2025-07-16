@@ -41,12 +41,12 @@ public class RepositorioBaseEmOrm<T> where T : EntidadeBase<T>
         return true;
     }
 
-    public T? SelecionarRegistroPorId(Guid idRegistro)
+    public virtual T? SelecionarRegistroPorId(Guid idRegistro)
     {
         return registros.FirstOrDefault(x => x.Id.Equals(idRegistro));
     }
 
-    public List<T> SelecionarRegistros()
+    public virtual List<T> SelecionarRegistros()
     {
         return registros.ToList();
     }
