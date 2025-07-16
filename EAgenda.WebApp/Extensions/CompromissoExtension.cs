@@ -16,7 +16,7 @@ public static class CompromissoExtension
             compromisso.TipoDeCompromisso, 
             compromisso.Local, 
             compromisso.Link, 
-            compromisso.Contatos);
+            compromisso.Contato);
     }
     public static Compromisso ParaEntidade(this FormularioCompromissoViewModel compromissoVM)
     {
@@ -28,6 +28,6 @@ public static class CompromissoExtension
             compromissoVM.TipoDeCompromisso, 
             compromissoVM.Local, 
             compromissoVM.Link, 
-            compromissoVM.Contatos);
+            compromissoVM.Contato);
     }
 }

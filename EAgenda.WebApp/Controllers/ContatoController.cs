@@ -14,8 +14,8 @@ public class ContatoController : Controller
     private readonly ContextoDados contextoDados;
 
     public ContatoController(
-        ContextoDados contexto, 
-        IRepositorioContato repositorioContato, 
+        ContextoDados contexto,
+        IRepositorioContato repositorioContato,
         IRepositorioCompromisso repositorioCompromisso)
     {
         contextoDados = contexto;
@@ -42,7 +42,6 @@ public class ContatoController : Controller
         if (!ModelState.IsValid)
             return View(vm);
 
-        // Verifica duplicidade de email ou telefone
         var contatosExistentes = repositorioContato.SelecionarRegistros();
 
         if (contatosExistentes.Any(c => c.Email.Equals(vm.Email, StringComparison.OrdinalIgnoreCase)))
@@ -70,7 +69,14 @@ public class ContatoController : Controller
         if (contato == null)
             return NotFound();
 
-        var vm = new EditarContatoViewModel(contato.Id, contato.Nome, contato.Email, contato.Telefone, contato.Cargo, contato.Empresa);
+        var vm = new EditarContatoViewModel(
+            contato.Id,
+            contato.Nome,
+            contato.Email,
+            contato.Telefone,
+            contato.Cargo,
+            contato.Empresa
+        );
 
         return View(vm);
     }
@@ -81,7 +87,9 @@ public class ContatoController : Controller
         if (!ModelState.IsValid)
             return View(vm);
 
-        var contatosExistentes = repositorioContato.SelecionarRegistros().Where(c => c.Id != id);
+        var contatosExistentes = repositorioContato
+            .SelecionarRegistros()
+            .Where(c => c.Id != id);
 
         if (contatosExistentes.Any(c => c.Email.Equals(vm.Email, StringComparison.OrdinalIgnoreCase)))
         {
@@ -108,9 +116,10 @@ public class ContatoController : Controller
         if (contato == null)
             return NotFound();
 
-        // Verifica se contato tem compromissos vinculados
-        var compromissosDoContato = repositorioCompromisso.SelecionarRegistros()
-            .Where(c => c.Contatos.Any(ct => ct.Id == id)).ToList();
+        var compromissosDoContato = repositorioCompromisso
+            .SelecionarRegistros()
+            .Where(c => c.Contato?.Id == id)
+            .ToList();
 
         var vm = new ExcluirContatoViewModel(contato.Id, contato.Nome)
         {
@@ -123,8 +132,10 @@ public class ContatoController : Controller
     [HttpPost("excluir/{id:guid}")]
     public IActionResult ExcluirConfirmado(Guid id, ExcluirContatoViewModel vm)
     {
-        var compromissosDoContato = repositorioCompromisso.SelecionarRegistros()
-            .Where(c => c.Contatos.Any(ct => ct.Id == id)).ToList();
+        var compromissosDoContato = repositorioCompromisso
+            .SelecionarRegistros()
+            .Where(c => c.Contato?.Id == id)
+            .ToList();
 
         if (compromissosDoContato.Any())
         {

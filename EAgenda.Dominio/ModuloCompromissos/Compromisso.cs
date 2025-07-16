@@ -12,9 +12,8 @@ public class Compromisso : EntidadeBase<Compromisso>
     public string TipoDeCompromisso { get; set; }
     public string Local { get; set; }
     public string Link { get; set; }
-
-    public List<Contato> Contatos { get; set; } = new List<Contato>();
-
+    public Contato? Contato { get; set; }
+    
     public Compromisso() { }
 
     public Compromisso(
@@ -25,7 +24,7 @@ public class Compromisso : EntidadeBase<Compromisso>
         string tipoDeCompromisso,
         string local,
         string link,
-        List<Contato> contatos)
+        Contato contato)
     {
         Assunto = assunto;
         DataDeOcorrencia = dataDeOcorrencia;
@@ -34,7 +33,7 @@ public class Compromisso : EntidadeBase<Compromisso>
         TipoDeCompromisso = tipoDeCompromisso;
         Local = local;
         Link = link;
-        Contatos = contatos ?? new List<Contato>();
+        Contato = contato;
     }
 
     public Compromisso(
@@ -46,8 +45,8 @@ public class Compromisso : EntidadeBase<Compromisso>
         string tipoDeCompromisso,
         string local,
         string link,
-        List<Contato> contatos)
-        : this(assunto, dataDeOcorrencia, horaDeInicio, horaDeTermino, tipoDeCompromisso, local, link, contatos)
+        Contato contato)
+        : this(assunto, dataDeOcorrencia, horaDeInicio, horaDeTermino, tipoDeCompromisso, local, link, contato)
     {
         Id = id;
     }
@@ -61,6 +60,6 @@ public class Compromisso : EntidadeBase<Compromisso>
         TipoDeCompromisso = registroEditado.TipoDeCompromisso;
         Local = registroEditado.Local;
         Link = registroEditado.Link;
-        Contatos = registroEditado.Contatos ?? new List<Contato>();
+        Contato = registroEditado.Contato;    
     }
 }

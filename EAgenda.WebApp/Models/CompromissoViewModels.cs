@@ -23,10 +23,16 @@ public class FormularioCompromissoViewModel
 
     [Required(ErrorMessage = "O campo \"Tipo de compromisso\" é obrigatório.")]
     public string TipoDeCompromisso { get; set; }
+
     public string? Local { get; set; }
+
     public string Link { get; set; }
+
     public Guid? ContatoId { get; set; }
-    public List<Contato> Contatos { get; set; } = new List<Contato>();
+
+    public Contato? Contato { get; set; }
+
+    public List<Contato> Contatos { get; set; } = new();
 }
 
 public class CadastrarCompromissoViewModel : FormularioCompromissoViewModel
@@ -52,7 +58,7 @@ public class CadastrarCompromissoViewModel : FormularioCompromissoViewModel
         Local = local;
         Link = link;
         ContatoId = contatoId;
-        Contatos = contatos ?? new List<Contato>();
+        Contatos = contatos ?? new();
     }
 }
 
@@ -83,7 +89,7 @@ public class EditarCompromissoViewModel : FormularioCompromissoViewModel
         Local = local;
         Link = link;
         ContatoId = contatoId;
-        Contatos = contatos ?? new List<Contato>();
+        Contatos = contatos ?? new();
     }
 
     public Compromisso ParaEntidade()
@@ -97,21 +103,19 @@ public class EditarCompromissoViewModel : FormularioCompromissoViewModel
             TipoDeCompromisso,
             Local,
             Link,
-            new List<Contato>()
+            null!
         );
     }
 }
 
 public class VisualizarCompromissoViewModel
 {
-    public VisualizarCompromissoViewModel() { }
+    public List<DetalhesCompromissoViewModel> Registros { get; set; } = new();
 
-    public List<DetalhesCompromissoViewModel> Registros { get; set; } = new List<DetalhesCompromissoViewModel>();
+    public VisualizarCompromissoViewModel() { }
 
     public VisualizarCompromissoViewModel(List<Compromisso> compromissos)
     {
-        Registros = new List<DetalhesCompromissoViewModel>();
-
         foreach (var c in compromissos)
             Registros.Add(c.ParaDetalhesVm());
     }
@@ -127,7 +131,7 @@ public class DetalhesCompromissoViewModel
     public string TipoDeCompromisso { get; set; }
     public string Local { get; set; }
     public string Link { get; set; }
-    public List<Contato> Contatos { get; set; } = new List<Contato>();
+    public Contato? Contato { get; set; }
 
     public DetalhesCompromissoViewModel(
         Guid id,
@@ -138,7 +142,7 @@ public class DetalhesCompromissoViewModel
         string tipoDeCompromisso,
         string local,
         string link,
-        List<Contato> contatos)
+        Contato? contato)
     {
         Id = id;
         Assunto = assunto;
@@ -148,7 +152,7 @@ public class DetalhesCompromissoViewModel
         TipoDeCompromisso = tipoDeCompromisso;
         Local = local;
         Link = link;
-        Contatos = contatos ?? new List<Contato>();
+        Contato = contato;
     }
 }
 
@@ -159,7 +163,7 @@ public class ExcluirCompromissoViewModel
 
     public ExcluirCompromissoViewModel() { }
 
-    public ExcluirCompromissoViewModel(Guid id, string assunto) : this()
+    public ExcluirCompromissoViewModel(Guid id, string assunto)
     {
         Id = id;
         Assunto = assunto;

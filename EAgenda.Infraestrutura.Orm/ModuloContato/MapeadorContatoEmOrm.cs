@@ -8,6 +8,26 @@ public class MapeadorContatoEmOrm : IEntityTypeConfiguration<Contato>
 {
     public void Configure(EntityTypeBuilder<Contato> builder)
     {
-        throw new NotImplementedException();
+        builder.Property(x => x.Id)
+            .ValueGeneratedNever()
+            .IsRequired();
+
+        builder.Property(x => x.Nome)
+            .IsRequired();
+
+        builder.Property(x => x.Telefone)
+            .IsRequired();
+
+        builder.Property(x => x.Email)
+            .IsRequired();
+
+        builder.Property(x => x.Empresa)
+            .IsRequired(false);
+
+        builder.Property(x => x.Cargo)
+            .IsRequired(false);
+
+        builder.HasMany(ct => ct.Compromissos)
+            .WithOne(cmp => cmp.Contato);
     }
 }

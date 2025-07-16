@@ -1,4 +1,5 @@
 ﻿using EAgenda.Dominio.Compartilhado;
+using EAgenda.Dominio.Modulo_Compromissos;
 
 namespace EAgenda.Dominio.ModuloContato;
 
@@ -9,6 +10,12 @@ public class Contato : EntidadeBase<Contato>
     public string Telefone { get; set; }
     public string Cargo { get; set; }
     public string Empresa { get; set; }
+    public List<Compromisso> Compromissos { get; set; }
+
+    public Contato()
+    {
+        Compromissos = new List<Compromisso>();
+    }
 
     public Contato(string nome, string email, string telefone, string cargo, string empresa)
     {
@@ -26,5 +33,21 @@ public class Contato : EntidadeBase<Contato>
         Telefone = registroEditado.Telefone;
         Cargo = registroEditado.Cargo;
         Empresa = registroEditado.Empresa;
+    }
+
+    public void RegistrarCompromisso(Compromisso compromisso)
+    {
+        if (Compromissos.Any(c => c.Id == compromisso.Id))
+            return;
+
+        Compromissos.Add(compromisso);
+    }
+
+    public void RemoverCompromisso(Compromisso compromisso)
+    {
+        if (!Compromissos.Any(c => c.Id == compromisso.Id))
+            return;
+
+        Compromissos.Remove(compromisso);
     }
 }

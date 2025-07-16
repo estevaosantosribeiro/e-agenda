@@ -1,5 +1,4 @@
 ﻿using EAgenda.Dominio.ModuloContato;
-using EAgenda.Infraestrutura.Orm.ModuloContato;
 using Microsoft.EntityFrameworkCore;
 
 namespace EAgenda.Infraestrutura.Orm.Compartilhado;
@@ -12,7 +11,9 @@ public class EAgendaDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new MapeadorContatoEmOrm());
+        var assembly = typeof(EAgendaDbContext).Assembly;
+
+        modelBuilder.ApplyConfigurationsFromAssembly(assembly);
 
         base.OnModelCreating(modelBuilder);
     }

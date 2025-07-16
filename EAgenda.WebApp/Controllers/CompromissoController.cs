@@ -14,8 +14,8 @@ public class CompromissoController : Controller
     private readonly IRepositorioContato repositorioContato;
 
     public CompromissoController(
-        ContextoDados contexto, 
-        IRepositorioCompromisso repositorioCompromisso, 
+        ContextoDados contexto,
+        IRepositorioCompromisso repositorioCompromisso,
         IRepositorioContato repositorioContato)
     {
         contextoDados = contexto;
@@ -27,15 +27,16 @@ public class CompromissoController : Controller
     {
         var registros = repositorioCompromisso.SelecionarRegistros();
         var visualizarVM = new VisualizarCompromissoViewModel(registros);
-
         return View(visualizarVM);
     }
 
     [HttpGet("cadastrar")]
     public IActionResult Cadastrar()
     {
-        var cadastrarVM = new CadastrarCompromissoViewModel();
-        cadastrarVM.Contatos = repositorioContato.SelecionarRegistros();
+        var cadastrarVM = new CadastrarCompromissoViewModel
+        {
+            Contatos = repositorioContato.SelecionarRegistros()
+        };
 
         return View(cadastrarVM);
     }
@@ -52,39 +53,24 @@ public class CompromissoController : Controller
             return View(cadastrarVm);
         }
 
-        List<Contato> contatosSelecionados = new();
+        Contato? contatoSelecionado = null;
 
         if (cadastrarVm.ContatoId != null)
-        {
-            var contatoSelecionado = repositorioContato.SelecionarRegistroPorId(cadastrarVm.ContatoId.Value);
-            if (contatoSelecionado != null)
-                contatosSelecionados.Add(contatoSelecionado);
-        }
+            contatoSelecionado = repositorioContato.SelecionarRegistroPorId(cadastrarVm.ContatoId.Value);
 
-        string linkLocal;
-
-        if (cadastrarVm.TipoDeCompromisso == "Remoto")
-        {
-            linkLocal = cadastrarVm.Link;
-        }
-        else
-        {
-            linkLocal = cadastrarVm.Link;
-        }
-
-        var entidade = new Compromisso(
+        var compromisso = new Compromisso(
             Guid.NewGuid(),
             cadastrarVm.Assunto,
             cadastrarVm.DataDeOcorrencia,
             cadastrarVm.HoraDeInicio,
             cadastrarVm.HoraDeTermino,
             cadastrarVm.TipoDeCompromisso,
-            linkLocal,
-            linkLocal,
-            contatosSelecionados
+            cadastrarVm.Local,
+            cadastrarVm.Link,
+            contatoSelecionado
         );
 
-        repositorioCompromisso.CadastrarRegistro(entidade);
+        repositorioCompromisso.CadastrarRegistro(compromisso);
 
         return RedirectToAction(nameof(Index));
     }
@@ -94,9 +80,7 @@ public class CompromissoController : Controller
     {
         var registroSelecionado = repositorioCompromisso.SelecionarRegistroPorId(id);
 
-        Guid contatoId = Guid.Empty;
-        if (registroSelecionado.Contatos != null && registroSelecionado.Contatos.Count > 0)
-            contatoId = registroSelecionado.Contatos[0].Id;
+        Guid contatoId = registroSelecionado.Contato?.Id ?? Guid.Empty;
 
         var editarVM = new EditarCompromissoViewModel(
             registroSelecionado.Id,
@@ -126,17 +110,10 @@ public class CompromissoController : Controller
             return View(editarVM);
         }
 
-        List<Contato> contatosSelecionados = new();
+        var entidade = editarVM.ParaEntidade();
 
         if (editarVM.ContatoId != null)
-        {
-            var contatoSelecionado = repositorioContato.SelecionarRegistroPorId(editarVM.ContatoId.Value);
-            if (contatoSelecionado != null)
-                contatosSelecionados.Add(contatoSelecionado);
-        }
-
-        var entidade = editarVM.ParaEntidade();
-        entidade.Contatos = contatosSelecionados;
+            entidade.Contato = repositorioContato.SelecionarRegistroPorId(editarVM.ContatoId.Value);
 
         repositorioCompromisso.EditarRegistro(id, entidade);
 
@@ -148,7 +125,6 @@ public class CompromissoController : Controller
     {
         var registroSelecionado = repositorioCompromisso.SelecionarRegistroPorId(id);
         var excluirVm = new ExcluirCompromissoViewModel(registroSelecionado.Id, registroSelecionado.Assunto);
-
         return View(excluirVm);
     }
 
