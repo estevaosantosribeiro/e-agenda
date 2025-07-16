@@ -10,6 +10,7 @@ using EAgenda.Infraestrutura.Arquivos.ModuloContato;
 using EAgenda.Infraestrutura.Arquivos.ModuloDespesa;
 using EAgenda.Infraestrutura.Arquivos.ModuloTarefa;
 using EAgenda.Infraestrutura.Orm.Compartilhado;
+using EAgenda.Infraestrutura.Orm.ModuloCompromisso;
 using EAgenda.Infraestrutura.Orm.ModuloContato;
 using EAgenda.WebApp.ActionFilters;
 using EAgenda.WebApp.DependencyInjection;
@@ -27,7 +28,7 @@ public class Program
 
         builder.Services.AddScoped<ContextoDados>((_) => new ContextoDados(true));
         builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmArquivo>();
-        builder.Services.AddScoped<IRepositorioCompromisso, RepositorioCompromissoEmArquivo>();
+        builder.Services.AddScoped<IRepositorioCompromisso, RepositorioCompromissoEmOrm>();
         builder.Services.AddScoped<IRepositorioContato, RepositorioContatoEmOrm>();
         builder.Services.AddScoped<IRepositorioDespesa, RepositorioDespesaEmArquivo>();
         builder.Services.AddScoped<IRepositorioTarefa, RepositorioTarefaEmArquivo>();

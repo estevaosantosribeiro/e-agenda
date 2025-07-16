@@ -1,4 +1,5 @@
-﻿using EAgenda.Dominio.ModuloContato;
+﻿using EAgenda.Dominio.Modulo_Compromissos;
+using EAgenda.Dominio.ModuloContato;
 using Microsoft.EntityFrameworkCore;
 
 namespace EAgenda.Infraestrutura.Orm.Compartilhado;
@@ -6,6 +7,7 @@ namespace EAgenda.Infraestrutura.Orm.Compartilhado;
 public class EAgendaDbContext : DbContext
 {
     public DbSet<Contato> Contatos { get; set; }
+    public DbSet<Compromisso> Compromissos { get; set; }
 
     public EAgendaDbContext(DbContextOptions options) : base(options) { }
 
