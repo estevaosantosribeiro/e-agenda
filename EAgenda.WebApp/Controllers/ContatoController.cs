@@ -121,7 +121,24 @@ public class ContatoController : Controller
             return View(vm);
         }
 
-        repositorioContato.EditarRegistro(id, vm.ParaEntidade());
+        var entidade = vm.ParaEntidade();
+
+        var transacao = contexto.Database.BeginTransaction();
+
+        try
+        {
+            repositorioContato.EditarRegistro(id, entidade);
+
+            contexto.SaveChanges();
+
+            transacao.Commit();
+        }
+        catch (Exception)
+        {
+            transacao.Rollback();
+
+            throw;
+        }
 
         return RedirectToAction(nameof(Index));
     }
@@ -161,7 +178,21 @@ public class ContatoController : Controller
             return RedirectToAction(nameof(Excluir), new { id });
         }
 
-        repositorioContato.ExcluirRegistro(id);
+        var transacao = contexto.Database.BeginTransaction();
+
+        try
+        {
+            repositorioContato.ExcluirRegistro(id);
+
+            contexto.SaveChanges();
+
+            transacao.Commit();
+        } catch (Exception)
+        {
+            transacao.Rollback();
+
+            throw;
+        }
 
         return RedirectToAction(nameof(Index));
     }

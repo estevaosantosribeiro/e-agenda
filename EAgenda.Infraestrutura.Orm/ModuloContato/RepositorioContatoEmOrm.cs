@@ -19,17 +19,31 @@ public class RepositorioContatoEmOrm : IRepositorioContato
 
     public bool EditarRegistro(Guid idRegistro, Contato registroEditado)
     {
-        throw new NotImplementedException();
+        var registroSelecionado = SelecionarRegistroPorId(idRegistro);
+
+        if (registroSelecionado is null )
+            return false;
+
+        registroSelecionado.AtualizarRegistro(registroEditado);
+
+        return true;
     }
 
     public bool ExcluirRegistro(Guid idRegistro)
     {
-        throw new NotImplementedException();
+        var registroSelecionado = SelecionarRegistroPorId(idRegistro);
+
+        if (registroSelecionado is null )
+            return false;
+
+        contexto.Contatos.Remove(registroSelecionado);
+
+        return true;
     }
 
     public Contato? SelecionarRegistroPorId(Guid idRegistro)
     {
-        throw new NotImplementedException();
+        return contexto.Contatos.FirstOrDefault(x => x.Id.Equals(idRegistro));
     }
 
     public List<Contato> SelecionarRegistros()
