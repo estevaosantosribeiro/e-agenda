@@ -1,8 +1,9 @@
 ﻿using EAgenda.Dominio.ModuloContato;
-using EAgenda.Dominio.Modulo_Compromissos;
 using EAgenda.Infraestrutura.Arquivos.Compartilhado;
 using EAgenda.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using EAgenda.Dominio.ModuloCompromissos;
+using EAgenda.Infraestrutura.Orm.Compartilhado;
 
 namespace EAgenda.WebApp.Controllers;
 
@@ -11,14 +12,14 @@ public class ContatoController : Controller
 {
     private readonly IRepositorioContato repositorioContato;
     private readonly IRepositorioCompromisso repositorioCompromisso;
-    private readonly ContextoDados contextoDados;
+    private readonly EAgendaDbContext contexto;
 
     public ContatoController(
-        ContextoDados contexto,
+        EAgendaDbContext contexto,
         IRepositorioContato repositorioContato,
         IRepositorioCompromisso repositorioCompromisso)
     {
-        contextoDados = contexto;
+        this.contexto = contexto;
         this.repositorioContato = repositorioContato;
         this.repositorioCompromisso = repositorioCompromisso;
     }
@@ -56,7 +57,24 @@ public class ContatoController : Controller
             return View(vm);
         }
 
-        repositorioContato.CadastrarRegistro(vm.ParaEntidade());
+        var entidade = vm.ParaEntidade();
+
+        var transacao = contexto.Database.BeginTransaction();
+
+        try
+        {
+            repositorioContato.CadastrarRegistro(entidade);
+
+            contexto.SaveChanges();
+
+            transacao.Commit();
+        }
+        catch (Exception)
+        {
+            transacao.Rollback();
+
+            throw;
+        }
 
         return RedirectToAction(nameof(Index));
     }

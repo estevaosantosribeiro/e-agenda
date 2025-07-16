@@ -1,4 +1,5 @@
 ﻿using EAgenda.Dominio.Modulo_Compromissos;
+using EAgenda.Dominio.ModuloCompromissos;
 using EAgenda.Dominio.ModuloContato;
 using EAgenda.Infraestrutura.Arquivos.Compartilhado;
 using EAgenda.WebApp.Models;
